@@ -48,8 +48,8 @@ void DriveSubsystem::Periodic() {
   std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
   targetOffsetAngle_Horizontal = table->GetNumber("tx", 0.0);
   targetOffsetAngle_Vertical = table->GetNumber("ty", 0.0);
-  double targetArea = table->GetNumber("ta", 0.0);
-  double targetSkew = table->GetNumber("ts", 0.0);
+  //double targetArea = table->GetNumber("ta", 0.0);
+  //double targetSkew = table->GetNumber("ts", 0.0);
 
   frc::SmartDashboard::PutNumber("LL tx", targetOffsetAngle_Horizontal);
   frc::SmartDashboard::PutNumber("LL ty", targetOffsetAngle_Vertical);
@@ -72,28 +72,6 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
                            bool fieldRelative) {
-  
-  units::meters_per_second_t xSpeedOverride;
-
-  frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
-  double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
-  if(m_driverController.GetBButton()){
-    //std::cout << "Button Read\n";
-    std::cout << (targetOffsetAngle_Horizontal * std::numbers::pi / 180.0);
-    fieldRelative = false;
-   if(distanceOff > 0.1 || distanceOff < -0.1){
-    xSpeedOverride = (units::meters_per_second_t)(0.5 * distanceOff) * -1.0;
-   }else{
-    xSpeedOverride = (units::meters_per_second_t)0;
-   }
-    frc::SmartDashboard::PutNumber("xSpeed Override", (double)xSpeedOverride);
-      if(targetOffsetAngle_Horizontal > 5.0){
-        rot = (units::radians_per_second_t)(targetOffsetAngle_Horizontal * std::numbers::pi / 180.0);
-      }
-      else if(targetOffsetAngle_Horizontal < (-5.0)){
-        rot = (units::radians_per_second_t)(targetOffsetAngle_Horizontal * std::numbers::pi / 180.0);
-      }
-  }
 
   // Convert the commanded speeds into the correct units for the drivetrain
   units::meters_per_second_t xSpeedDelivered =
