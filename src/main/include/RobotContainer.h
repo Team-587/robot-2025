@@ -29,13 +29,13 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
+private:
 
- private:
   // The driver's controller
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 
   // The robot's subsystems and commands are defined here...
-
+ 
   // The robot's subsystems
   DriveSubsystem m_drive;
 
@@ -45,4 +45,7 @@ class RobotContainer {
   void ConfigureButtonBindings();
   
   frc2::InstantCommand m_ZeroHeading{[this] {m_drive.ZeroHeading(); }, {&m_drive}};
+
+  
+  std::unique_ptr<frc2::Command> Test;
 };

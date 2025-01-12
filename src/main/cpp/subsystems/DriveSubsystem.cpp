@@ -15,6 +15,7 @@
 #include "networktables/NetworkTableValue.h"
 #include "LimelightHelpers.h"
 #include <frc/XboxController.h>
+#include "RobotContainer.h"
 
 #include "Constants.h"
 
@@ -73,13 +74,21 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::radians_per_second_t rot,
                            bool fieldRelative) {
 
+frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
+double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
   // Convert the commanded speeds into the correct units for the drivetrain
+
+  xSpeed = xSpeed * rightTriggerValue;
+  ySpeed = ySpeed * rightTriggerValue;
+  rot = rot * rightTriggerValue;
+  
   units::meters_per_second_t xSpeedDelivered =
       xSpeed.value() * DriveConstants::kMaxSpeed;
   units::meters_per_second_t ySpeedDelivered =
       ySpeed.value() * DriveConstants::kMaxSpeed;
   units::radians_per_second_t rotDelivered =
       rot.value() * DriveConstants::kMaxAngularSpeed;
+
 
   frc::SmartDashboard::PutNumber("xSpeed", (double)xSpeed);
   frc::SmartDashboard::PutNumber("ySpeed", (double)ySpeed);

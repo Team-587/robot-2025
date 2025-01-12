@@ -13,6 +13,7 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
 #include "studica/AHRS.h"
+#include "frc/XboxController.h"
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"

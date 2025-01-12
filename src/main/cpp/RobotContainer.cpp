@@ -7,6 +7,7 @@
 #include <frc/controller/PIDController.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc2/command/InstantCommand.h>
@@ -15,6 +16,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <units/angle.h>
 #include <units/velocity.h>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
 
 #include <utility>
 
@@ -44,6 +46,15 @@ RobotContainer::RobotContainer() {
             true);
       },
       {&m_drive}));
+
+/*const std::string Test_Str = "Test";
+
+Test = pathplanner::PathPlannerAuto(Test_Str).ToPtr().Unwrap();
+
+m_chooser.AddOption(Test_Str, Test.get());
+
+frc::SmartDashboard::PutData("Auto", &m_chooser);*/
+
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -101,3 +112,4 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand(
           [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
 }
+
