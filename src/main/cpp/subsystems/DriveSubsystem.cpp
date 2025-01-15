@@ -16,10 +16,17 @@
 #include "LimelightHelpers.h"
 #include <frc/XboxController.h>
 #include "RobotContainer.h"
+#include <pathplanner/lib/auto/AutoBuilder.h>
+#include <pathplanner/lib/config/RobotConfig.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
+#include <frc/DriverStation.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/ChassisSpeeds.h>
 
 #include "Constants.h"
 
 using namespace DriveConstants;
+using namespace pathplanner;
 
 DriveSubsystem::DriveSubsystem()
     : m_frontLeft{kFrontLeftDrivingCanId, kFrontLeftTurningCanId,
@@ -36,7 +43,36 @@ DriveSubsystem::DriveSubsystem()
                      m_NavX.GetRotation2d().Radians()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+                 frc::Pose2d{}} {
+
+                  RobotConfig config = RobotConfig::fromGUISettings();
+
+                  AutoBuilder::configure(
+        [this](){ return GetPose(); }, // Robot pose supplier
+        [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
+        [this](){ return getSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        [this](auto speeds, auto feedforwards){ driveRobotRelative(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+       std::make_shared<PPHolonomicDriveController>( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            pathplanner::PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+            pathplanner::PIDConstants(5.0, 0.0, 0.0) ),
+            config, // Rotation PID constants
+             //pathplanner::ReplanningConfig() // Default path replanning config. See the API for the options here
+        []() {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+            auto alliance =frc::DriverStation::GetAlliance();
+            if (alliance) {
+                return alliance.value() == frc::DriverStation::Alliance::kRed;
+            }
+            return false;
+        },
+        this // Reference to this subsystem to set requirements
+    );
+
+    ResetEncoders();
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
@@ -67,6 +103,23 @@ void DriveSubsystem::Periodic() {
                         m_NavX.GetRotation2d().Radians()}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+    if(frc::DriverStation::IsAutonomousEnabled()){
+        std::cout << "position" << (double)m_odometry.GetPose().X() << ", " << (double)m_odometry.GetPose().Y() << "\n";
+    }            
+}
+
+void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeSpeeds){
+    frc::ChassisSpeeds targetSpeeds = frc::ChassisSpeeds::Discretize(robotRelativeSpeeds, 0.02_s);
+    //targetSpeeds.vx = -targetSpeeds.vx;
+   // targetSpeeds.vy = -targetSpeeds.vy;
+   // targetSpeeds.omega = -targetSpeeds.omega;
+
+    if (frc::DriverStation::IsAutonomousEnabled()) {
+        std::cout << "auto drive speed x:" << (double)targetSpeeds.vx << " y:" << (double)targetSpeeds.vy << " ang:" << (double)targetSpeeds.omega << "\n";
+    }
+    
+    auto targetStates = kDriveKinematics.ToSwerveModuleStates(targetSpeeds);
+    SetModuleStates(targetStates);
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -81,7 +134,7 @@ double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.
   xSpeed = xSpeed * rightTriggerValue;
   ySpeed = ySpeed * rightTriggerValue;
   rot = rot * rightTriggerValue;
-  
+
   units::meters_per_second_t xSpeedDelivered =
       xSpeed.value() * DriveConstants::kMaxSpeed;
   units::meters_per_second_t ySpeedDelivered =
@@ -158,9 +211,15 @@ double DriveSubsystem::GetTurnRate() {
 frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
+    frc::Pose2d tmpPose = GetPose();
+    std::cout << "Reset Odometry start X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
+    std::cout << "Reset Odometry set   X:" << (double)pose.X() << " Y:" << (double)pose.Y() << " Rot:" << (double)pose.Rotation().Degrees() << "\n";
   m_odometry.ResetPosition(
       GetHeading(),
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
       pose);
+
+    tmpPose = GetPose();
+    std::cout << "Reset Odometry after X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
 }
