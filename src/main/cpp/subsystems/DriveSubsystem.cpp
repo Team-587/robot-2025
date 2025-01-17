@@ -53,8 +53,8 @@ DriveSubsystem::DriveSubsystem()
         [this](){ return getSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         [this](auto speeds, auto feedforwards){ driveRobotRelative(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
        std::make_shared<PPHolonomicDriveController>( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            pathplanner::PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-            pathplanner::PIDConstants(5.0, 0.0, 0.0) ),
+            pathplanner::PIDConstants(7.0, 0.0, 0.0), // Translation PID constants
+            pathplanner::PIDConstants(7.0, 0.0, 0.0) ),
             config, // Rotation PID constants
              //pathplanner::ReplanningConfig() // Default path replanning config. See the API for the options here
         []() {
@@ -126,6 +126,10 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
                            bool fieldRelative) {
+
+
+//ySpeed = 0.0_mps;
+//rot = 0.0_rad_per_s;
 
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
@@ -200,7 +204,7 @@ units::degree_t DriveSubsystem::GetHeading() {
   return frc::Rotation2d(units::radian_t{m_NavX.GetRotation2d().Radians()}).Degrees();
 }
 
-void DriveSubsystem::ZeroHeading() { m_NavX.Reset(); }
+void DriveSubsystem::ZeroHeading() { m_NavX.Reset(); ResetEncoders(); }
 
 double DriveSubsystem::GetTurnRate() {
   //return -m_gyro.GetRate(frc::ADIS16470_IMU::IMUAxis::kZ).value();

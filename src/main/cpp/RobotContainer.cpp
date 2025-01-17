@@ -49,10 +49,13 @@ RobotContainer::RobotContainer() {
       {&m_drive}));
 
 const std::string Test_Str = "Test";
+const std::string Test2_Str = "Test 2";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
+Test_2 = PathPlannerAuto(Test2_Str).ToPtr().Unwrap();
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
+m_chooser.AddOption(Test2_Str, Test_2.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
