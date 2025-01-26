@@ -26,9 +26,9 @@
 using namespace DriveConstants;
 using namespace pathplanner;
 
-RobotContainer::RobotContainer() {
+RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
   // Initialize all of your commands and subsystems here
-
+  m_lights.setCoralSubsystem(&m_coralSubsystem);
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -63,12 +63,37 @@ frc::SmartDashboard::PutData("Auto", &m_chooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  frc2::JoystickButton(&m_driverController,
-                       frc::XboxController::Button::kRightBumper)
-      .WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
+  //frc2::JoystickButton(&m_driverController, frc::XboxController::Button::kRightBumper).WhileTrue(new frc2::RunCommand([this] { m_drive.SetX(); }, {&m_drive}));
   
   frc2::JoystickButton startButton{&m_driverController, frc::XboxController::Button::kStart};
   startButton.OnTrue(&m_ZeroHeading);
+
+  frc2::JoystickButton coDriverX(&m_codriverController, frc::XboxController::Button::kX);
+  coDriverX.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::LEVEL1); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverY(&m_codriverController, frc::XboxController::Button::kY);
+  coDriverY.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::LEVEL2); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverB(&m_codriverController, frc::XboxController::Button::kB);
+  coDriverB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::LEVEL3); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverA(&m_codriverController, frc::XboxController::Button::kA);
+  coDriverA.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverRB(&m_codriverController, frc::XboxController::Button::kRightBumper);
+  coDriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::INTAKE); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverLB(&m_codriverController, frc::XboxController::Button::kLeftBumper);
+  coDriverLB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton DriveLB(&m_driverController, frc::XboxController::Button::kLeftBumper);
+  DriveLB.WhileTrue(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::SCORE); }, {&m_ballSubsystem}));
+
+  frc2::JoystickButton DriveRB(&m_driverController, frc::XboxController::Button::kRightBumper);
+  DriveRB.WhileTrue(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::INTAKE); }, {&m_ballSubsystem}));
+
+  DriveRB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
+  DriveLB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

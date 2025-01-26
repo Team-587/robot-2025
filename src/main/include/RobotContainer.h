@@ -16,6 +16,9 @@
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/CoralSubsystem.h"
+#include "subsystems/BallSubsystem.h"
+#include "subsystems/Lights.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -29,15 +32,23 @@ class RobotContainer {
   RobotContainer();
 
   frc2::Command* GetAutonomousCommand();
+
+  CoralSubsystem m_coralSubsystem;
+  BallSubsystem m_ballSubsystem;
+  Lights m_lights;
+
 private:
 
   // The driver's controller
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
+  frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};
 
   // The robot's subsystems and commands are defined here...
  
   // The robot's subsystems
   DriveSubsystem m_drive;
+  
+  
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;

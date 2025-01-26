@@ -25,7 +25,7 @@ MAXSwerveModule::MAXSwerveModule(const int drivingCANId, const int turningCANId,
                            SparkBase::PersistMode::kPersistParameters);
   m_turningSpark.SetInverted(true);
   m_chassisAngularOffset = chassisAngularOffset;
-  m_desiredState.angle =
+  m_desiredState.angle = 
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
   m_drivingEncoder.SetPosition(0);
 }

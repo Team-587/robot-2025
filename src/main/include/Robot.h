@@ -27,4 +27,7 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
+
+  frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
+  frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};
 };
