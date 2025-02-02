@@ -79,8 +79,10 @@ constexpr int kHouseCanId = 25;
 constexpr int kHouseSwitch = 1;
 constexpr int kUppiesSwitch = 2;
 
+constexpr int kDistanceSensor = 0;
+
 constexpr int kLEDPort = 0;
-constexpr int kLEDtotalLength = 100;
+constexpr int kLEDtotalLength = 36; //Total LED length should be multiples of 2
 }  // namespace DriveConstants
 
 namespace ModuleConstants {

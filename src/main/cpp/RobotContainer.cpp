@@ -50,12 +50,15 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
 
 const std::string Test_Str = "Test";
 const std::string Test2_Str = "Test 2";
+const std::string ML4_Str = "ML4";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
 Test_2 = PathPlannerAuto(Test2_Str).ToPtr().Unwrap();
+ML4 = PathPlannerAuto(ML4_Str).ToPtr().Unwrap();
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
 m_chooser.AddOption(Test2_Str, Test_2.get());
+m_chooser.AddOption(ML4_Str, ML4.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);

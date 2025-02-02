@@ -14,6 +14,7 @@
 #include "Constants.h"
 #include <frc/DigitalInput.h>
 #include <frc/XboxController.h>
+#include <frc/AnalogInput.h>
 
 using namespace rev::spark;
 
@@ -66,6 +67,8 @@ SparkClosedLoopController m_uppies1ClosedLoopController = m_uppiesMotor1.GetClos
 
 frc::DigitalInput m_houseSwitch{DriveConstants::kHouseSwitch};
 frc::DigitalInput m_uppiesSwitch{DriveConstants::kUppiesSwitch};
+
+frc::AnalogInput m_distanceSensor{DriveConstants::kDistanceSensor};
 
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};

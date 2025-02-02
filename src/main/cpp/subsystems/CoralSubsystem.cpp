@@ -5,6 +5,7 @@
 #include "subsystems/CoralSubsystem.h"
 #include "Configs.h"
 #include "RobotContainer.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 CoralSubsystem::CoralSubsystem(){
     #ifndef usingNeo
@@ -25,10 +26,14 @@ CoralSubsystem::CoralSubsystem(){
 // This method will be called once per scheduler run
 void CoralSubsystem::Periodic() {
 
-    haveCoral = m_houseSwitch.Get();
+    haveCoral = !m_houseSwitch.Get();
+    //std::cout << haveCoral << "\n";
     bool readyToScore = false;
     bool houseMovingAngle;
     double coDriverRightTrigger = (m_codriverController.GetRightTriggerAxis() * 0.5);
+    int distance = m_distanceSensor.GetValue();
+
+    frc::SmartDashboard::PutNumber("Distance", distance);
 
     #ifndef usingNeo
     //STOW

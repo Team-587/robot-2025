@@ -21,19 +21,19 @@ void Robot::RobotInit() {}
 void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); 
 
 int pov = m_driverController.GetPOV();
-std::cout << pov << "\n";
+//std::cout << pov << "\n";
 
     if(pov == 0){
         m_container.m_ballSubsystem.setState(BallSubsystem::INTAKE);
-        std::cout << "ALGAE INTAKE\n";
+        //std::cout << "ALGAE INTAKE\n";
         //ALGAE INTAKE
     }else if(pov == 180){
         m_container.m_ballSubsystem.setState(BallSubsystem::SCORE);
-        std::cout << "ALGAE SCORE\n";
+        //std::cout << "ALGAE SCORE\n";
         //ALGAE SCORE
     }else if(pov == -1){
         m_container.m_ballSubsystem.setState(BallSubsystem::STOW);
-        std::cout << "ALGAE STOW\n";
+        //std::cout << "ALGAE STOW\n";
         //ALGAE STOW
     }
 

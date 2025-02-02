@@ -6,17 +6,10 @@
 #include "subsystems/CoralSubsystem.h"
 
 Lights::Lights() {
-    for (int i = 0; i < DriveConstants::kLEDtotalLength; i = i + 3) {
-    //topLEDArray[i].SetRGB(0, 255, 0);
-    //0, 133, 202
-    //255, 234, 0
-
-    LEDArray[i].SetRGB(2, 5, 97);
-    LEDArray[i + 1].SetRGB(0, 133, 202);
-    LEDArray[i + 2].SetRGB(252, 186, 3);
-    //ledArray[i + 1].SetRGB(0, 133, 202);
-    //ledArray[i + 2].SetRGB(3, 8, 143);
-  }
+    for (int j = 0; j < DriveConstants::kLEDtotalLength - 1; j = j + 2) {
+            LEDArray[j].SetRGB(0, 133, 202);
+            LEDArray[j + 1].SetRGB(252, 186, 3);
+        }
   
   ledLoopCount = 9;
   disableLoopCount = 2;
@@ -27,18 +20,29 @@ Lights::Lights() {
 
 // This method will be called once per scheduler run
 void Lights::Periodic() {
-    std::cout << p_coralSubsystem << " p\n";
-    std::cout << p_coralSubsystem->haveCoral << " hc\n";
+    //std::cout << p_coralSubsystem << " p\n";
+    //std::cout << p_coralSubsystem->haveCoral << " hc\n";
     if(p_coralSubsystem->haveCoral){
         std::cout << "have coral\n";
         for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
             LEDArray[i].SetRGB(201, 5, 255);
         }
     }
-
+    else{
+        //std::cout << "Don't have coral\n";
+        for (int j = 0; j < DriveConstants::kLEDtotalLength - 1; j = j + 2) {
+            LEDArray[j].SetRGB(0, 133, 202);
+            LEDArray[j + 1].SetRGB(252, 186, 3);
+        }
+    }
     if(p_coralSubsystem->readyToScore){
         for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
             LEDArray[i].SetRGB(0, 255, 25);
+        }
+    } else if(p_coralSubsystem->readyToScore == false && p_coralSubsystem->haveCoral == false){
+        for (int j = 0; j < DriveConstants::kLEDtotalLength - 1; j = j + 2) {
+            LEDArray[j].SetRGB(0, 133, 202);
+            LEDArray[j + 1].SetRGB(252, 186, 3);
         }
     }
     

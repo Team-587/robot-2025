@@ -93,10 +93,16 @@ void DriveSubsystem::Periodic() {
   //frc::SmartDashboard::PutNumber("LL ta", targetArea);
   //frc::SmartDashboard::PutNumber("LL ts", targetSkew);
 
-  distanceAprilTag = 20/tan(targetOffsetAngle_Vertical * std::numbers::pi / 180.0);
+  double cameraDegree = 30.0;
+  double cameraHeight = 6.0;
+  double aprilTagHeight = 12.25;
+
+  distanceAprilTag = (aprilTagHeight - cameraHeight)/tan((targetOffsetAngle_Vertical + cameraDegree) * std::numbers::pi / 180.0);
   frc::SmartDashboard::PutNumber("Distance April Tag", distanceAprilTag);
   distanceOff = (distanceAprilTag - 70.0) / 39.37;
   frc::SmartDashboard::PutNumber("Distance Off", distanceOff);
+  double distanceCenterAprilTag = distanceAprilTag * (tan((targetOffsetAngle_Horizontal) * std::numbers::pi / 180));
+  frc::SmartDashboard::PutNumber("Distance From Center", distanceCenterAprilTag);
 
   m_odometry.Update(frc::Rotation2d(units::radian_t{
                         //m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}),
@@ -134,6 +140,13 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
 double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
   // Convert the commanded speeds into the correct units for the drivetrain
+
+  if(xSpeed < -0.01_mps && xSpeed > -0.1_mps){
+        xSpeed = 0.0_mps;
+    }
+  if(ySpeed < 0.1_mps && ySpeed > 0.01_mps){
+        ySpeed = 0.0_mps;
+    }
 
   xSpeed = xSpeed * rightTriggerValue;
   ySpeed = ySpeed * rightTriggerValue;
@@ -226,4 +239,4 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 
     tmpPose = GetPose();
     std::cout << "Reset Odometry after X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
-}
+}   
