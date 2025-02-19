@@ -22,7 +22,8 @@
 #include <frc/DriverStation.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/ChassisSpeeds.h>
-
+#include <cmath>
+#include <vector>
 #include "Constants.h"
 
 using namespace DriveConstants;
@@ -39,11 +40,19 @@ DriveSubsystem::DriveSubsystem()
                   kRearRightChassisAngularOffset},
       m_odometry{kDriveKinematics,
                  frc::Rotation2d(units::radian_t{
-                     //m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}),
                      m_NavX.GetRotation2d().Radians()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {
+                 frc::Pose2d{}},
+      m_poseEstimator{kDriveKinematics, frc::Rotation2d(units::radian_t{
+                     m_NavX.GetRotation2d().Radians()}),
+                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
+                    m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+                    frc::Pose2d{}, {0.1, 0.1, 0.1}, {0.1, 0.1, 0.1}}
+
+{
+
+                  frc::SmartDashboard::PutData("Field", &m_field);
 
                   RobotConfig config = RobotConfig::fromGUISettings();
 
@@ -76,7 +85,8 @@ DriveSubsystem::DriveSubsystem()
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-
+  m_field.SetRobotPose(m_odometry.GetPose());
+  
   //Telemetry
   frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
   frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
@@ -105,14 +115,40 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Distance From Center", distanceCenterAprilTag);
 
   m_odometry.Update(frc::Rotation2d(units::radian_t{
-                        //m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}),
                         m_NavX.GetRotation2d().Radians()}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+
+  m_poseEstimator.Update(frc::Rotation2d(units::radian_t{
+                        m_NavX.GetRotation2d().Radians()}),
+                        {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
+                        m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+    bool doRejectUpdate = false;
+    LimelightHelpers::SetRobotOrientation("limelight", (double)m_poseEstimator.GetEstimatedPosition().Rotation().Degrees(), 0, 0, 0, 0, 0);
+        LimelightHelpers::PoseEstimate mt2 = LimelightHelpers::getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        if(std::abs(m_NavX.GetRate()) > 720) {
+            doRejectUpdate = true;
+        }
+        if(mt2.tagCount == 0) {
+            doRejectUpdate = true;
+        }
+        if(!doRejectUpdate) {
+            m_poseEstimator.SetVisionMeasurementStdDevs({0.7, 0.7, 9999999});
+            m_poseEstimator.AddVisionMeasurement(
+                mt2.pose,
+                mt2.timestampSeconds
+            );
+        }
+
+        frc::Pose2d position = m_poseEstimator.GetEstimatedPosition();
+        frc::SmartDashboard::PutNumber("position X", (double)position.X());
+        frc::SmartDashboard::PutNumber("position Y", (double)position.Y());
+
     if(frc::DriverStation::IsAutonomousEnabled()){
         std::cout << "position" << (double)m_odometry.GetPose().X() << ", " << (double)m_odometry.GetPose().Y() << "\n";
     }            
 }
+  
 
 void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeSpeeds){
     frc::ChassisSpeeds targetSpeeds = frc::ChassisSpeeds::Discretize(robotRelativeSpeeds, 0.02_s);

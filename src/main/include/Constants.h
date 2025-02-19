@@ -15,7 +15,7 @@
 
 #pragma once
 
-#define usingNeo
+//#define usingNeo
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -122,15 +122,18 @@ constexpr double kDriveWheelFreeSpeedRps =
 
 namespace AlgaeConstants {
 
-constexpr double kBallIntakeAngle = 30.0;
-constexpr double kBallScoreAngle = 60.0;
-constexpr double kBallStowAngle = 90.0;
+constexpr double kBallIntakeAngle = 55.0;
+constexpr double kBallScoreAngle = 30.0;
+constexpr double kBallStowAngle = 5.0;
+constexpr double kBallHalfStow = 30.0;
 
 constexpr double kBallMinSpeed = 0.0;
 constexpr double kBallMaxSpeed = 0.0;
 
-constexpr double kBallAutoIntakeSpeed = 0.0;
-constexpr double kBallAutoScoreSpeed = 0.0;
+constexpr double kBallAutoIntakeSpeed = 0.3;
+constexpr double kBallAutoScoreSpeed = -0.3;
+constexpr double kBallIntakeSpeed = 0.3;
+constexpr double kBallScoreSpeed = -0.3;
 }
 
 namespace CoralConstants {
@@ -138,30 +141,31 @@ namespace CoralConstants {
     //Elevator Constants
     constexpr double kUppiesIntakeHeight = 0.0;
     constexpr double kUppiesL1Height = 0.0;
-    constexpr double kUppiesL2Height = 0.0;
-    constexpr double kUppiesL3Height = 0.0;
-    constexpr double kUppiesL4Height = 0.0;
-    constexpr double kUppiesMaxHeight = 0.0;
+    constexpr double kUppiesL2Height = 12.0;
+    constexpr double kUppiesL3Height = 22.0;
+    constexpr double kUppiesL4Height = 28.0;
+    constexpr double kUppiesMaxHeight = 33.0;
     constexpr double kUppiesMinHeight = 0.0;
 
     //Wrist Constants
-    constexpr double kWristIntakeAngle = 0.0;
-    constexpr double kWristMoveAngle = 0.0;
-    constexpr double kWristL1Angle = 0.0;
-    constexpr double kWristL2Angle = 0.0;
-    constexpr double kWristL3Angle = 0.0;
-    constexpr double kWristL4Angle = 0.0;
+    constexpr double kWristIntakeAngle = 10.0;
+    constexpr double kWristMoveAngle = 85.0;
+    constexpr double kWristL1Angle = 180.0;
+    constexpr double kWristL2Angle = 180.0;
+    constexpr double kWristL3Angle = 180.0;
+    constexpr double kWristL4Angle = 180.0;
     constexpr double kWristMaxAngle = 0.0;
     constexpr double kWristMinAngle = 0.0;
 
     //House Constants
-    constexpr double kHouseIntakeSpeed = 6.0;
+    constexpr double kHouseIntakeSpeed = 0.20;
     constexpr double kHouseL1Speed = 0.0;
     constexpr double kHouseL2Speed = 0.0;
     constexpr double kHouseL3Speed = 0.0;
     constexpr double kHouseL4Speed = 0.0;
     constexpr double kHouseStopSpeed = 0.0;
     constexpr double kHouseMaxSpeed = 0.0;
+    constexpr double kScoreSpeed = -0.2;
 }
 
 namespace AutoConstants {

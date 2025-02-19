@@ -23,7 +23,7 @@ void Lights::Periodic() {
     //std::cout << p_coralSubsystem << " p\n";
     //std::cout << p_coralSubsystem->haveCoral << " hc\n";
     if(p_coralSubsystem->haveCoral){
-        std::cout << "have coral\n";
+        std::cout << "LIGHTS have coral\n";
         for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
             LEDArray[i].SetRGB(201, 5, 255);
         }

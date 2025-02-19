@@ -60,5 +60,6 @@ private:
   
   std::unique_ptr<frc2::Command> Test;
   std::unique_ptr<frc2::Command> Test_2;
-  std::unique_ptr<frc2::Command> ML4;
+  std::unique_ptr<frc2::Command> ML4_Right;
+  std::unique_ptr<frc2::Command> ML4_Left;
 };

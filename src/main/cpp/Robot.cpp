@@ -6,9 +6,14 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <frc/DriverStation.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+#include "subsystems/BallSubsystem.h"
 
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  //frc::CameraServer::StartAutomaticCapture();
+}
 
 /**
  * This function is called every 20 ms, no matter the mode. Use
@@ -21,6 +26,9 @@ void Robot::RobotInit() {}
 void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); 
 
 int pov = m_driverController.GetPOV();
+int povCoDriver = m_codriverController.GetPOV();
+double coDriverLT = m_codriverController.GetLeftTriggerAxis();
+frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatchTime());
 //std::cout << pov << "\n";
 
     if(pov == 0){
@@ -31,10 +39,32 @@ int pov = m_driverController.GetPOV();
         m_container.m_ballSubsystem.setState(BallSubsystem::SCORE);
         //std::cout << "ALGAE SCORE\n";
         //ALGAE SCORE
-    }else if(pov == -1){
+    }else if(pov == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::SCORE){
         m_container.m_ballSubsystem.setState(BallSubsystem::STOW);
         //std::cout << "ALGAE STOW\n";
         //ALGAE STOW
+    } else if(pov == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::INTAKE) {
+      m_container.m_ballSubsystem.setState(BallSubsystem::HALFSTOW);
+    }
+
+    /*else if(povCoDriver == 0){
+        m_container.m_ballSubsystem.setState(BallSubsystem::INTAKE);
+        //std::cout << "ALGAE INTAKE\n";
+        //ALGAE INTAKE
+    }else if(povCoDriver == 180){
+        m_container.m_ballSubsystem.setState(BallSubsystem::SCORE);
+        //std::cout << "ALGAE SCORE\n";
+        //ALGAE SCORE
+    }else if(povCoDriver == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::SCORE){
+        m_container.m_ballSubsystem.setState(BallSubsystem::STOW);
+        //std::cout << "ALGAE STOW\n";
+        //ALGAE STOW
+    } else if(povCoDriver == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::INTAKE) {
+      m_container.m_ballSubsystem.setState(BallSubsystem::HALFSTOW);
+    }*/
+
+    if(coDriverLT > 0.3){
+      m_container.m_coralSubsystem.setState(CoralSubsystem::STOW);
     }
 
 }

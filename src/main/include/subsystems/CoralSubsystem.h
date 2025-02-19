@@ -24,6 +24,7 @@ class CoralSubsystem : public frc2::SubsystemBase {
 
   enum coralState {
     STOW,
+    STOWCORAL,
     INTAKE,
     MOVEMENT,
     LEVEL1,
@@ -52,16 +53,18 @@ class CoralSubsystem : public frc2::SubsystemBase {
 
   bool checkUppiesHeight(double uppiesHeight);
 
-#ifndef usingNeo
+
 SparkMax m_houseMotor{DriveConstants::kHouseCanId, SparkMax::MotorType::kBrushless};
 SparkMax m_wristMotor{DriveConstants::kHouseWristCanId, SparkMax::MotorType::kBrushless};
+SparkAbsoluteEncoder m_wristEncoder = m_wristMotor.GetAbsoluteEncoder();
+SparkClosedLoopController m_wristClosedLoopController = m_wristMotor.GetClosedLoopController();
+#ifndef usingNeo
 SparkMax m_uppiesMotor1{DriveConstants::kUppies1CanId, SparkMax::MotorType::kBrushless};
 SparkMax m_uppiesMotor2{DriveConstants::kUppies2CanId, SparkMax::MotorType::kBrushless};
 
-SparkAbsoluteEncoder m_wristEncoder = m_wristMotor.GetAbsoluteEncoder();
+
 SparkMaxAlternateEncoder m_uppiesEncoder1 = m_uppiesMotor1.GetAlternateEncoder();
 
-SparkClosedLoopController m_wristClosedLoopController = m_wristMotor.GetClosedLoopController();
 SparkClosedLoopController m_uppies1ClosedLoopController = m_uppiesMotor1.GetClosedLoopController();
 #endif
 

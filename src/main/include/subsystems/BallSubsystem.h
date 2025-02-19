@@ -10,6 +10,7 @@
 #include <rev/SparkClosedLoopController.h>
 #include <rev/SparkRelativeEncoder.h>
 #include <frc/XboxController.h>
+#include <thread>
 
 #include "Constants.h"
 #include "Configs.h"
@@ -23,10 +24,13 @@ class BallSubsystem : public frc2::SubsystemBase {
   enum ballStates {
     INTAKE,
     STOW,
+    HALFSTOW,
     SCORE
   };
 
 ballStates DesiredState{STOW};
+ballStates CurrentState = STOW;
+
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -40,14 +44,12 @@ ballStates DesiredState{STOW};
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  #ifndef usingNeo
   SparkMax m_ballMotor{DriveConstants::kBallPickupIntakeCanId, SparkMax::MotorType::kBrushless};
   SparkMax m_ballWristMotor{DriveConstants::kBallPickupWristCanId, SparkMax::MotorType::kBrushless};
 
   SparkAbsoluteEncoder m_ballAbsoluteEncoder = m_ballWristMotor.GetAbsoluteEncoder();
 
   SparkClosedLoopController m_ballClosedLoopController = m_ballWristMotor.GetClosedLoopController();
-  #endif
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
   frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};
 };

@@ -50,15 +50,18 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
 
 const std::string Test_Str = "Test";
 const std::string Test2_Str = "Test 2";
-const std::string ML4_Str = "ML4";
+const std::string ML4_Left_Str = "ML4 - Left";
+const std::string ML4_Right_Str = "ML4 - Right";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
 Test_2 = PathPlannerAuto(Test2_Str).ToPtr().Unwrap();
-ML4 = PathPlannerAuto(ML4_Str).ToPtr().Unwrap();
+ML4_Left = PathPlannerAuto(ML4_Left_Str).ToPtr().Unwrap();
+ML4_Right = PathPlannerAuto(ML4_Right_Str).ToPtr().Unwrap();
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
 m_chooser.AddOption(Test2_Str, Test_2.get());
-m_chooser.AddOption(ML4_Str, ML4.get());
+m_chooser.AddOption(ML4_Left_Str, ML4_Left.get());
+m_chooser.AddOption(ML4_Right_Str, ML4_Right.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
@@ -83,11 +86,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton coDriverA(&m_codriverController, frc::XboxController::Button::kA);
   coDriverA.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}));
 
-  frc2::JoystickButton coDriverRB(&m_codriverController, frc::XboxController::Button::kRightBumper);
-  coDriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::INTAKE); }, {&m_coralSubsystem}));
+ // frc2::JoystickButton coDriverRB(&m_codriverController, frc::XboxController::Button::kRightBumper);
+  //coDriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::INTAKE); }, {&m_coralSubsystem}));
 
   frc2::JoystickButton coDriverLB(&m_codriverController, frc::XboxController::Button::kLeftBumper);
-  coDriverLB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}));
+  coDriverLB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::INTAKE); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton coDriverRB(&m_codriverController, frc::XboxController::Button::kRightBumper);
+  coDriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::SCORE); }, {&m_coralSubsystem}));
 
   frc2::JoystickButton DriveLB(&m_driverController, frc::XboxController::Button::kLeftBumper);
   DriveLB.WhileTrue(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::SCORE); }, {&m_ballSubsystem}));

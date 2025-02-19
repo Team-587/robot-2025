@@ -14,6 +14,9 @@
 #include <frc2/command/SubsystemBase.h>
 #include "studica/AHRS.h"
 #include "frc/XboxController.h"
+#include <frc/estimator/SwerveDrivePoseEstimator.h>
+#include <frc/smartdashboard/Field2d.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
@@ -124,9 +127,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // The gyro sensor
   //frc::ADIS16470_IMU m_gyro;
-  //AHRS m_NavX{frc::SPI::Port::kMXP};
-  studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
+  studica::AHRS m_NavX{studica::AHRS::NavXComType::kMXP_SPI};
+  //studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
+
+  frc::Field2d m_field;
+
   frc::SwerveDriveOdometry<4> m_odometry;
+
+  frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
 };

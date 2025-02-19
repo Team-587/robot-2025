@@ -21,6 +21,7 @@ class MAXSwerveModule {
         1 / ModuleConstants::kDriveWheelFreeSpeedRps;
 
     drivingConfig.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
+        .Inverted(true)
         .SmartCurrentLimit(50);
     drivingConfig.encoder
         .PositionConversionFactor(drivingFactor)          // meters
@@ -70,28 +71,29 @@ static SparkMaxConfig& wristConfig() {
     static SparkMaxConfig wristConfig{};
 
     // Use module constants to calculate conversion factor
-    double turningFactor = 2 * std::numbers::pi;
+    double turningFactor = 360;
 
     wristConfig.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(20);
+        .SmartCurrentLimit(60)
+        .Inverted(false);
     wristConfig
         .absoluteEncoder
         // Invert the turning encoder, since the output shaft rotates in the
         // opposite direction of the steering motor in the MAXSwerve Module.
         .Inverted(false)
-        .PositionConversionFactor(turningFactor)          // radians
-        .VelocityConversionFactor(turningFactor / 60.0);  // radians per second
+        .PositionConversionFactor(turningFactor)          // degrees
+        .VelocityConversionFactor(turningFactor / 60.0);  // degrees per second
     wristConfig.closedLoop
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAbsoluteEncoder)
         // These are example gains you may need to them for your own robot!
-        .Pid(1, 0, 0)
+        .Pid(0.0025, 0, 0)
         .OutputRange(-1, 1)
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
         // from 350 degrees to 10 degrees will go through 0 rather than the
         // other direction which is a longer route.
-        .PositionWrappingEnabled(true)
-        .PositionWrappingInputRange(0, turningFactor);
+        .PositionWrappingEnabled(false);
+        //.PositionWrappingInputRange(0, turningFactor);
 
     return wristConfig;
   }
@@ -103,26 +105,28 @@ static SparkMaxConfig& wristConfig() {
     double turningFactor = 1.432 * std::numbers::pi;
 
     uppiesConfig1.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(40);
+        .SmartCurrentLimit(50)
+        .Inverted(true);
     uppiesConfig1
         .alternateEncoder
         .CountsPerRevolution(8192)
         // Invert the turning encoder, since the output shaft rotates in the
         // opposite direction of the steering motor in the MAXSwerve Module.
-        .Inverted(false)
+        .Inverted(true)
         .PositionConversionFactor(turningFactor)          // radians
         .VelocityConversionFactor(turningFactor / 60.0);  // radians per second
+          
     uppiesConfig1.closedLoop
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAlternateOrExternalEncoder)
         // These are example gains you may need to them for your own robot!
-        .Pid(1, 0, 0)
-        .OutputRange(-1, 1)
+        .Pid(.11, 0, 0)
+        .OutputRange(-1, 1);
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
         // from 350 degrees to 10 degrees will go through 0 rather than the
         // other direction which is a longer route.
-        .PositionWrappingEnabled(true)
-        .PositionWrappingInputRange(0, turningFactor);
+        //.PositionWrappingEnabled(true)
+        //.PositionWrappingInputRange(0, turningFactor);
 
     return uppiesConfig1;
   }
@@ -134,7 +138,8 @@ static SparkMaxConfig& wristConfig() {
     //double turningFactor = 2 * std::numbers::pi;
 
     uppiesConfig2.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(40);
+        .Inverted(false)
+        .SmartCurrentLimit(50);
     /*uppiesConfig2
         .absoluteEncoder
         // Invert the turning encoder, since the output shaft rotates in the
@@ -163,22 +168,24 @@ static SparkMaxConfig& wristConfig() {
     static SparkMaxConfig ballWristConfig{};
 
     // Use module constants to calculate conversion factor
-    double turningFactor = 2 * std::numbers::pi;
+    double turningFactor = 360;
 
     ballWristConfig.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(20);
+        //.Inverted(true)
+        .SmartCurrentLimit(60);
     ballWristConfig
         .absoluteEncoder
         // Invert the turning encoder, since the output shaft rotates in the
         // opposite direction of the steering motor in the MAXSwerve Module.
         .Inverted(false)
-        .PositionConversionFactor(turningFactor)          // radians
-        .VelocityConversionFactor(turningFactor / 60.0);  // radians per second
+        .PositionConversionFactor(turningFactor)          // degrees
+        .VelocityConversionFactor(turningFactor / 60.0);  // degrees per second
     ballWristConfig.closedLoop
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAbsoluteEncoder)
         // These are example gains you may need to them for your own robot!
-        .Pid(1, 0, 0)
-        .OutputRange(-1, 1)
+        .Pid(.2, 0, 0)//.VelocityFF(.001)
+        //.Pid(0, 0, 0)
+        .OutputRange(-1.0, 1.0)
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
         // from 350 degrees to 10 degrees will go through 0 rather than the
