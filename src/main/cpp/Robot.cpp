@@ -63,9 +63,9 @@ frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatc
       m_container.m_ballSubsystem.setState(BallSubsystem::HALFSTOW);
     }*/
 
-    if(coDriverLT > 0.3){
-      m_container.m_coralSubsystem.setState(CoralSubsystem::STOW);
-    }
+    // if(coDriverLT > 0.3){
+    //   m_container.m_coralSubsystem.setState(CoralSubsystem::STOW);
+    // }
 
 }
 

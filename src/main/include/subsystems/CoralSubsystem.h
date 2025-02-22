@@ -24,7 +24,6 @@ class CoralSubsystem : public frc2::SubsystemBase {
 
   enum coralState {
     STOW,
-    STOWCORAL,
     INTAKE,
     MOVEMENT,
     LEVEL1,
@@ -43,6 +42,7 @@ class CoralSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
   void setState(coralState newState);
+  void setSpeed(double speed);
 
   bool haveCoral;
   bool readyToScore;
@@ -52,6 +52,7 @@ class CoralSubsystem : public frc2::SubsystemBase {
   bool checkWristAngle(double wristAngle);
 
   bool checkUppiesHeight(double uppiesHeight);
+
 
 
 SparkMax m_houseMotor{DriveConstants::kHouseCanId, SparkMax::MotorType::kBrushless};
