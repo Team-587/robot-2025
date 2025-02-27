@@ -14,8 +14,10 @@
 #include <numbers>
 
 #pragma once
+#define haveClimber
+#define homeField
+#define usingNeo
 
-//#define usingNeo
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -32,7 +34,8 @@ namespace DriveConstants {
 #ifdef usingNeo
 constexpr units::meters_per_second_t kMaxSpeed = 5.0_mps;
 #else
-constexpr units::meters_per_second_t kMaxSpeed = 5.9_mps;
+//constexpr units::meters_per_second_t kMaxSpeed = 5.9_mps;
+constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
 #endif
 constexpr units::radians_per_second_t kMaxAngularSpeed{2 * std::numbers::pi};
 
@@ -76,6 +79,7 @@ constexpr int kUppies2CanId = 23;
 constexpr int kHouseWristCanId = 24;
 constexpr int kHouseCanId = 25;
 constexpr int kClimberCanId = 26;
+constexpr int kClimberCanId2 = 27;
 
 constexpr int kHouseSwitch = 1;
 constexpr int kUppiesSwitch = 2;

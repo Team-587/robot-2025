@@ -4,8 +4,13 @@
 
 #include "subsystems/Climber.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "Configs.h"
 
-Climber::Climber() = default;
+Climber::Climber() {
+    #ifdef haveClimber
+    m_climberMotor2.Configure(Configs::climberConfig2(), SparkBase::ResetMode::kResetSafeParameters, SparkBase::PersistMode::kPersistParameters);
+    #endif
+}
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {

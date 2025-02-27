@@ -18,7 +18,9 @@
 #include <frc/AnalogInput.h>
 
 using namespace rev::spark;
-//#define haveClimber
+
+
+
 
 class Climber : public frc2::SubsystemBase {
  public:
@@ -36,6 +38,7 @@ class Climber : public frc2::SubsystemBase {
   #ifdef haveClimber
   // declared private and exposed only through public methods.
   SparkMax m_climberMotor{DriveConstants::kClimberCanId, SparkMax::MotorType::kBrushless};
+  SparkMax m_climberMotor2{DriveConstants::kClimberCanId2, SparkMax::MotorType::kBrushless};
   #endif
 
   frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};

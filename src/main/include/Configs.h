@@ -198,4 +198,18 @@ static SparkMaxConfig& wristConfig() {
 
     return ballWristConfig;
   }
+
+static SparkMaxConfig& climberConfig2() {
+    static SparkMaxConfig climberConfig2{};
+
+    // Use module constants to calculate conversion factor
+    //double turningFactor = 2 * std::numbers::pi;
+
+    climberConfig2.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
+        .SmartCurrentLimit(50)
+        .Follow(DriveConstants::kClimberCanId, true);
+
+    return climberConfig2;
+}
+  
 }  // namespace Configs

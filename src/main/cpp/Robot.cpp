@@ -13,7 +13,7 @@
 
 
 void Robot::RobotInit() {
-  //frc::CameraServer::StartAutomaticCapture();
+  frc::CameraServer::StartAutomaticCapture();
 }
 
 /**
