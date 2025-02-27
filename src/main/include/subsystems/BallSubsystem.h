@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/SparkMax.h>
+#include <rev/SparkFlex.h>
 #include <rev/SparkAbsoluteEncoder.h>
 #include <rev/SparkClosedLoopController.h>
 #include <rev/SparkRelativeEncoder.h>
@@ -43,13 +44,15 @@ ballStates CurrentState = STOW;
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
-  SparkMax m_ballMotor{DriveConstants::kBallPickupIntakeCanId, SparkMax::MotorType::kBrushless};
+  #ifndef usingNeo
+  SparkFlex m_ballMotor{DriveConstants::kBallPickupIntakeCanId, SparkMax::MotorType::kBrushless};
   SparkMax m_ballWristMotor{DriveConstants::kBallPickupWristCanId, SparkMax::MotorType::kBrushless};
 
   SparkAbsoluteEncoder m_ballAbsoluteEncoder = m_ballWristMotor.GetAbsoluteEncoder();
 
   SparkClosedLoopController m_ballClosedLoopController = m_ballWristMotor.GetClosedLoopController();
+  #endif
+  
   frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
   frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};
 };

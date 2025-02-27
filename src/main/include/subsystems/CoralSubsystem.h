@@ -9,6 +9,7 @@
 #include <rev/SparkAbsoluteEncoder.h>
 #include <rev/SparkClosedLoopController.h>
 #include <rev/SparkMax.h>
+#include <rev/SparkFlex.h>
 #include <rev/SparkRelativeEncoder.h>
 #include <rev/SparkMaxAlternateEncoder.h>
 #include "Constants.h"
@@ -30,7 +31,10 @@ class CoralSubsystem : public frc2::SubsystemBase {
     LEVEL2,
     LEVEL3,
     LEVEL4,
-    SCORE
+    SCORE,
+    ALGAE1,
+    ALGAE2,
+    ALGAESCORE
 
   };
 
@@ -47,6 +51,8 @@ class CoralSubsystem : public frc2::SubsystemBase {
   bool haveCoral;
   bool readyToScore;
 
+  double autoSpeed;
+
  private:
 
   bool checkWristAngle(double wristAngle);
@@ -55,11 +61,11 @@ class CoralSubsystem : public frc2::SubsystemBase {
 
 
 
-SparkMax m_houseMotor{DriveConstants::kHouseCanId, SparkMax::MotorType::kBrushless};
+#ifndef usingNeo
+SparkFlex m_houseMotor{DriveConstants::kHouseCanId, SparkMax::MotorType::kBrushless};
 SparkMax m_wristMotor{DriveConstants::kHouseWristCanId, SparkMax::MotorType::kBrushless};
 SparkAbsoluteEncoder m_wristEncoder = m_wristMotor.GetAbsoluteEncoder();
 SparkClosedLoopController m_wristClosedLoopController = m_wristMotor.GetClosedLoopController();
-#ifndef usingNeo
 SparkMax m_uppiesMotor1{DriveConstants::kUppies1CanId, SparkMax::MotorType::kBrushless};
 SparkMax m_uppiesMotor2{DriveConstants::kUppies2CanId, SparkMax::MotorType::kBrushless};
 

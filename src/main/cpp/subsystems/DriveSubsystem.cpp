@@ -184,9 +184,9 @@ double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.
         ySpeed = 0.0_mps;
     }
 
-  xSpeed = xSpeed * rightTriggerValue;
-  ySpeed = ySpeed * rightTriggerValue;
-  rot = rot * rightTriggerValue;
+  xSpeed = xSpeed * rightTriggerValue * 0.75;
+  ySpeed = ySpeed * rightTriggerValue * 0.75;
+  rot = rot * rightTriggerValue * 0.75;
 
   units::meters_per_second_t xSpeedDelivered =
       xSpeed.value() * DriveConstants::kMaxSpeed;

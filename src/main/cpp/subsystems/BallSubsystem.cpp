@@ -6,22 +6,23 @@
 #include <iostream>
 
 BallSubsystem::BallSubsystem(){
+    #ifndef usingNeo
     m_ballWristMotor.Configure(Configs::ballWristConfig(),
                            SparkBase::ResetMode::kResetSafeParameters,
                            SparkBase::PersistMode::kPersistParameters);
     m_ballMotor.SetInverted(true);
+    #endif
 }
 
 // This method will be called once per scheduler run
 void BallSubsystem::Periodic() {
     double coRightStickVal = m_codriverController.GetRightY();
-    //std::cout << m_ballAbsoluteEncoder.GetPosition();    
-    bool canRun = false;
+    //std::cout << m_ballAbsoluteEncoder.GetPosition();
+    #ifndef usingNeo
     if(DesiredState == STOW) {
         m_ballMotor.Set(AlgaeConstants::kBallMinSpeed);
         m_ballClosedLoopController.SetReference(AlgaeConstants::kBallStowAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         //m_ballMotor.Set(AlgaeConstants::kBallMinSpeed);  
-        //canRun = false;
         CurrentState = STOW;
         //std::cout << "ALGAE Stow\n";
     }
@@ -39,7 +40,6 @@ void BallSubsystem::Periodic() {
         m_ballMotor.Set(AlgaeConstants::kBallIntakeSpeed);
         //m_ballMotor.Set(0.0);
         CurrentState = INTAKE;
-        //canRun = true;
         //std::cout << "ALGAE Intake\n";
     }
 
@@ -49,15 +49,8 @@ void BallSubsystem::Periodic() {
         //m_ballMotor.Set(0.0);
         CurrentState = SCORE;
         //std::cout << "ALGAE Score\n";
-        //canRun = true;
     }
-
-    /*if(canRun){
-        m_ballMotor.Set(coRightStickVal);
-    }else{
-        m_ballMotor.Set(AlgaeConstants::kBallMinSpeed);
-    }
-    */
+    #endif
 }
 
 void BallSubsystem::setState(ballStates newState) {

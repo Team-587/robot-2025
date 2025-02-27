@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Middle Cage Start"
+            "pathName": "Middle Cage Start - Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Middle Cage Piece"
+            "pathName": "Middle Cage Piece - RIght"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Untested",
   "choreoAuto": false
 }

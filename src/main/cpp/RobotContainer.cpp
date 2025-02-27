@@ -38,34 +38,43 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
                                                          frc2::cmd::Wait(1.0_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL1Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
   
   pathplanner::NamedCommands::registerCommand("Level 2", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL2); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.0_s),
+                                                         frc2::cmd::Wait(2.5_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL2Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
   
   pathplanner::NamedCommands::registerCommand("Level 3", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL3); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.0_s),
+                                                         frc2::cmd::Wait(3.3_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL3Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
   
   pathplanner::NamedCommands::registerCommand("Level 4", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(2.0_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL4Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
 
   pathplanner::NamedCommands::registerCommand("Intake", frc2::cmd::Sequence(
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}), 
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseIntakeSpeed); }, {&m_coralSubsystem}),
                                                         frc2::cmd::Wait(1.5_s),
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
+  
+  pathplanner::NamedCommands::registerCommand("Stow",
+                                                        frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}));
+
+  
 
   // Set up default drive command
   // The left stick controls translation of the robot.
@@ -84,19 +93,22 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
       {&m_drive}));
 
 const std::string Test_Str = "Test";
-const std::string Test2_Str = "Test 2";
-const std::string ML4_Left_Str = "ML4 - Left";
+const std::string ML3_Left_Str = "ML3 - Left";
 const std::string ML4_Right_Str = "ML4 - Right";
+const std::string Level1_Str = "Level1";
+const std::string MiddleLevel3_Str = "Middle Level 3";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
-Test_2 = PathPlannerAuto(Test2_Str).ToPtr().Unwrap();
-ML4_Left = PathPlannerAuto(ML4_Left_Str).ToPtr().Unwrap();
+ML3_Left = PathPlannerAuto(ML3_Left_Str).ToPtr().Unwrap();
 ML4_Right = PathPlannerAuto(ML4_Right_Str).ToPtr().Unwrap();
+Level1 = PathPlannerAuto(Level1_Str).ToPtr().Unwrap();
+MiddleLevel3 = PathPlannerAuto(MiddleLevel3_Str).ToPtr().Unwrap();
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
-m_chooser.AddOption(Test2_Str, Test_2.get());
-m_chooser.AddOption(ML4_Left_Str, ML4_Left.get());
+m_chooser.AddOption(ML3_Left_Str, ML3_Left.get());
 m_chooser.AddOption(ML4_Right_Str, ML4_Right.get());
+m_chooser.AddOption(Level1_Str, Level1.get());
+m_chooser.AddOption(MiddleLevel3_Str, MiddleLevel3.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
@@ -138,6 +150,19 @@ void RobotContainer::ConfigureButtonBindings() {
 
   DriveRB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
   DriveLB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
+
+  frc2::JoystickButton startButtonCoDrive{&m_codriverController, frc::XboxController::Button::kStart};
+  startButtonCoDrive.OnTrue(&m_StartClimb);
+
+  frc2::JoystickButton backButtonLeft{&m_codriverController, frc::XboxController::Button::kLeftStick};
+  backButtonLeft.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::ALGAE1); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton backButtonRight{&m_codriverController, frc::XboxController::Button::kRightStick};
+  backButtonRight.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::ALGAE2); }, {&m_coralSubsystem}));
+
+  frc2::JoystickButton codriverRB{&m_codriverController, frc::XboxController::Button::kRightBumper};
+  codriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::ALGAESCORE); }, {&m_coralSubsystem}));
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

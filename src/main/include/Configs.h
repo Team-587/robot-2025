@@ -86,7 +86,8 @@ static SparkMaxConfig& wristConfig() {
     wristConfig.closedLoop
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAbsoluteEncoder)
         // These are example gains you may need to them for your own robot!
-        .Pid(0.003, 0, 0)
+        //.Pid(0.003, 0, 0)
+        .Pid(0.00400, 0, 0)
         .OutputRange(-1, 1)
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
@@ -120,8 +121,9 @@ static SparkMaxConfig& wristConfig() {
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAlternateOrExternalEncoder)
         // These are example gains you may need to them for your own robot!
         //.Pid(.11, 0, 0)
-        .Pid(.06, 0, 0)
-        .OutputRange(-1, 1);
+        .Pid(.085, 0, 0)
+        //.Pid(0, 0, 0)
+        .OutputRange(-0.55, 1);
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
         // from 350 degrees to 10 degrees will go through 0 rather than the

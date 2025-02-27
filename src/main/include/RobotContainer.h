@@ -19,6 +19,7 @@
 #include "subsystems/CoralSubsystem.h"
 #include "subsystems/BallSubsystem.h"
 #include "subsystems/Lights.h"
+#include "subsystems/Climber.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -47,6 +48,7 @@ private:
  
   // The robot's subsystems
   DriveSubsystem m_drive;
+  Climber m_climber;
   
   
 
@@ -56,10 +58,12 @@ private:
   void ConfigureButtonBindings();
   
   frc2::InstantCommand m_ZeroHeading{[this] {m_drive.ZeroHeading(); }, {&m_drive}};
+  frc2::InstantCommand m_StartClimb{[this] {m_climber.allowClimb();}, {&m_climber}};
 
   
   std::unique_ptr<frc2::Command> Test;
-  std::unique_ptr<frc2::Command> Test_2;
   std::unique_ptr<frc2::Command> ML4_Right;
-  std::unique_ptr<frc2::Command> ML4_Left;
+  std::unique_ptr<frc2::Command> ML3_Left;
+  std::unique_ptr<frc2::Command> Level1;
+  std::unique_ptr<frc2::Command> MiddleLevel3;
 };

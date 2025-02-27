@@ -5,33 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Square pt.1"
+            "name": "Intake"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Square pt.2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Square pt.3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Square pt.4 The finale"
+            "name": "Level 3"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Tests",
   "choreoAuto": false
 }

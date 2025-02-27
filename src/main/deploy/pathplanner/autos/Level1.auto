@@ -5,33 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Test 2 pt.1"
+            "name": "Stow"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Test 2 pt.2"
+            "pathName": "ScoreMiddle - Level 1"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "test 2 pt. 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "test pt. 2 pt. 4"
+            "name": "Level 1"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Tested",
   "choreoAuto": false
 }

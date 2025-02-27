@@ -75,6 +75,7 @@ constexpr int kUppies1CanId = 22;
 constexpr int kUppies2CanId = 23;
 constexpr int kHouseWristCanId = 24;
 constexpr int kHouseCanId = 25;
+constexpr int kClimberCanId = 26;
 
 constexpr int kHouseSwitch = 1;
 constexpr int kUppiesSwitch = 2;
@@ -139,34 +140,41 @@ constexpr double kBallScoreSpeed = -0.3;
 namespace CoralConstants {
 
     //Elevator Constants
-    constexpr double kUppiesIntakeHeight = 1.0;
-    constexpr double kUppiesL1Height = 1.0;
-    constexpr double kUppiesL2Height = 9.75;
-    constexpr double kUppiesL3Height = 18.0;
-    constexpr double kUppiesL4Height = 29.5;
+    constexpr double kUppiesIntakeHeight = 0.2;
+    constexpr double kUppiesL1Height = 0.2;
+    constexpr double kUppiesL2Height = 9.5;
+    constexpr double kUppiesL3Height = 17.7;
+    constexpr double kUppiesL4Height = 31.5;
     constexpr double kUppiesMaxHeight = 33.0;
     constexpr double kUppiesMinHeight = 0.0;
+    constexpr double kAlgaeRemoveHeight1 = 11.0;
+    constexpr double kAlgaeRemoveHeight2 = 19.5;
+    constexpr double kAlgaeScoreHeight = 3.0;
 
     //Wrist Constants
-    constexpr double kWristIntakeAngle = 10.0;
-    constexpr double kWristMoveAngle = 85.0;
-    constexpr double kWristL1Angle = 110.0;
-    constexpr double kWristL2Angle = 160.0;
-    constexpr double kWristL3Angle = 160.0;
-    constexpr double kWristL4Angle = 160.0;
+    constexpr double kWristIntakeAngle = 85.0;
+    constexpr double kWristMoveAngle = 160.0;
+    constexpr double kWristL1Angle = 185.0;
+    constexpr double kWristL1AngleAuto = 205.0;
+    constexpr double kWristL2Angle = 260.0;
+    constexpr double kWristL3Angle = 260.0;
+    constexpr double kWristL4Angle = 270.0;
     constexpr double kWristMaxAngle = 0.0;
     constexpr double kWristMinAngle = 0.0;
+    constexpr double kBallRemoveAngle = 210.0;
 
     //House Constants
     constexpr double kHouseIntakeSpeed = 0.30;
-    constexpr double kHouseL1Speed = -0.115;
-    constexpr double kHouseL2Speed = 0.0;
-    constexpr double kHouseL3Speed = 0.0;
-    constexpr double kHouseL4Speed = 0.0;
+    constexpr double kHouseL1Speed = -0.13;
+    constexpr double kHouseL2Speed = -0.3;
+    constexpr double kHouseL3Speed = -0.3;
+    constexpr double kHouseL4Speed = -0.3;
     constexpr double kHouseStopSpeed = 0.0;
     constexpr double kHouseMaxSpeed = 0.0;
-    constexpr double kScoreSpeed = -0.2;
-    constexpr double kBackspin = 0.05;
+    constexpr double kScoreSpeed = -0.3;
+    constexpr double kBackspin = 0.07;
+    constexpr double kRemoveSpeed = -0.20;
+    constexpr double kAlgaeShoot = 0.30;
 }
 
 namespace AutoConstants {

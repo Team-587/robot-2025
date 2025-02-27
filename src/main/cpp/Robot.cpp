@@ -9,6 +9,7 @@
 #include <frc/DriverStation.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include "subsystems/BallSubsystem.h"
+#include "subsystems/CoralSubsystem.h"
 
 
 void Robot::RobotInit() {
@@ -28,6 +29,7 @@ void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run();
 int pov = m_driverController.GetPOV();
 int povCoDriver = m_codriverController.GetPOV();
 double coDriverLT = m_codriverController.GetLeftTriggerAxis();
+int prevPov;
 frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatchTime());
 //std::cout << pov << "\n";
 
@@ -46,6 +48,23 @@ frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatc
     } else if(pov == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::INTAKE) {
       m_container.m_ballSubsystem.setState(BallSubsystem::HALFSTOW);
     }
+
+    /*if(povCoDriver == 270) {
+        m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE1);
+        prevPov = 270;
+    } else if(povCoDriver == 90) {
+        m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE2);
+        prevPov = 90;
+    } else if((povCoDriver == -1 && AlgaeIntaking1) || (povCoDriver == 180 && AlgaeIntaking1) || (povCoDriver == 0 && AlgaeIntaking1)){
+      m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE1);
+    } else if((povCoDriver == -1 && AlgaeIntaking2) || (povCoDriver == 180 && AlgaeIntaking2) || (povCoDriver == 0 && AlgaeIntaking2)){
+      m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE2);
+    }*/
+    /*else if(povCoDriver == -1 && prevPov == 270) {
+        m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE1);
+    } else if(povCoDriver == -1 && prevPov == 90) {
+        m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE2);
+    }*/
 
     /*else if(povCoDriver == 0){
         m_container.m_ballSubsystem.setState(BallSubsystem::INTAKE);
