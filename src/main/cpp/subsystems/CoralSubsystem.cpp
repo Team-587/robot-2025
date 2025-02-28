@@ -95,8 +95,11 @@ void CoralSubsystem::Periodic() {
              m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kUppiesIntakeHeight)){
-            m_wristClosedLoopController.SetReference(CoralConstants::kWristIntakeAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
-            std::cout << "STOW DONE\n";
+            if(haveCoral){
+                m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }else{
+                m_wristClosedLoopController.SetReference(CoralConstants::kWristIntakeAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }
         }
     }
 
@@ -154,7 +157,6 @@ void CoralSubsystem::Periodic() {
     //LEVEL1
     if(desiredState == LEVEL1){
         std::cout << "LEVEL 1\n";
-        m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         if(checkWristAngle(CoralConstants::kWristMoveAngle)){
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL1Height, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
@@ -164,42 +166,47 @@ void CoralSubsystem::Periodic() {
             }else{
                 m_wristClosedLoopController.SetReference(CoralConstants::kWristL1Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
             }
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
 
     //LEVEL2
     if(desiredState == LEVEL2){
         std::cout << "LEVEL 2\n";
-        m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         if(checkWristAngle(CoralConstants::kWristMoveAngle)){
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL2Height, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kUppiesL2Height)){
                 m_wristClosedLoopController.SetReference(CoralConstants::kWristL2Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
 
     //LEVEL3 
     if(desiredState == LEVEL3){
         std::cout << "LEVEL 3\n";
-        m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         if(checkWristAngle(CoralConstants::kWristMoveAngle)){
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL3Height, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kUppiesL3Height)){
                 m_wristClosedLoopController.SetReference(CoralConstants::kWristL3Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
     //LEVEL4
     if(desiredState == LEVEL4){
         std::cout << "LEVEL 4\n";
-         m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         // houseMovingAngle = true;
         if(checkWristAngle(CoralConstants::kWristMoveAngle)){
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL4Height, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
          if(checkUppiesHeight(CoralConstants::kUppiesL4Height)){
                  m_wristClosedLoopController.SetReference(CoralConstants::kWristL4Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
 

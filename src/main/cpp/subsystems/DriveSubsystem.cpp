@@ -174,7 +174,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 //rot = 0.0_rad_per_s;
 
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
-double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
+double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.5) + 1.0;
   // Convert the commanded speeds into the correct units for the drivetrain
 
   if(xSpeed < -0.01_mps && xSpeed > -0.1_mps){

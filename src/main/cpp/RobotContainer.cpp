@@ -59,7 +59,7 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
   
   pathplanner::NamedCommands::registerCommand("Level 4", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.0_s),
+                                                         frc2::cmd::Wait(2.80_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL4Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
@@ -93,22 +93,22 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
       {&m_drive}));
 
 const std::string Test_Str = "Test";
-const std::string ML3_Left_Str = "ML3 - Left";
+const std::string ML4_Left_Str = "ML4 - Left";
 const std::string ML4_Right_Str = "ML4 - Right";
 const std::string Level1_Str = "Level1";
-const std::string MiddleLevel3_Str = "Middle Level 3";
+const std::string MiddleLevel4_Str = "Middle Level 4";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
-ML3_Left = PathPlannerAuto(ML3_Left_Str).ToPtr().Unwrap();
+ML4_Left = PathPlannerAuto(ML4_Left_Str).ToPtr().Unwrap();
 ML4_Right = PathPlannerAuto(ML4_Right_Str).ToPtr().Unwrap();
 Level1 = PathPlannerAuto(Level1_Str).ToPtr().Unwrap();
-MiddleLevel3 = PathPlannerAuto(MiddleLevel3_Str).ToPtr().Unwrap();
+MiddleLevel4 = PathPlannerAuto(MiddleLevel4_Str).ToPtr().Unwrap();
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
-m_chooser.AddOption(ML3_Left_Str, ML3_Left.get());
+m_chooser.AddOption(ML4_Left_Str, ML4_Left.get());
 m_chooser.AddOption(ML4_Right_Str, ML4_Right.get());
 m_chooser.AddOption(Level1_Str, Level1.get());
-m_chooser.AddOption(MiddleLevel3_Str, MiddleLevel3.get());
+m_chooser.AddOption(MiddleLevel4_Str, MiddleLevel4.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
