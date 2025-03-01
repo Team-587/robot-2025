@@ -35,7 +35,7 @@ namespace DriveConstants {
 constexpr units::meters_per_second_t kMaxSpeed = 5.0_mps;
 #else
 //constexpr units::meters_per_second_t kMaxSpeed = 5.9_mps;
-constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
+constexpr units::meters_per_second_t kMaxSpeed = 3.5_mps;
 #endif
 constexpr units::radians_per_second_t kMaxAngularSpeed{2 * std::numbers::pi};
 
@@ -80,6 +80,8 @@ constexpr int kHouseWristCanId = 24;
 constexpr int kHouseCanId = 25;
 constexpr int kClimberCanId = 26;
 constexpr int kClimberCanId2 = 27;
+constexpr int kClimberHopperCanId = 28;
+constexpr int kClimberHopperCanId2 = 29;
 
 constexpr int kHouseSwitch = 1;
 constexpr int kUppiesSwitch = 2;
@@ -125,7 +127,7 @@ constexpr double kDriveWheelFreeSpeedRps =
     kDrivingMotorReduction;
 }  // namespace ModuleConstants
 
-namespace AlgaeConstants {
+/*namespace AlgaeConstants {
 
 constexpr double kBallIntakeAngle = 55.0;
 constexpr double kBallScoreAngle = 30.0;
@@ -139,7 +141,7 @@ constexpr double kBallAutoIntakeSpeed = 0.3;
 constexpr double kBallAutoScoreSpeed = -0.3;
 constexpr double kBallIntakeSpeed = 0.3;
 constexpr double kBallScoreSpeed = -0.3;
-}
+}*/
 
 namespace CoralConstants {
 
@@ -151,7 +153,7 @@ namespace CoralConstants {
     constexpr double kUppiesL4Height = 31.5;
     constexpr double kUppiesMaxHeight = 33.0;
     constexpr double kUppiesMinHeight = 0.0;
-    constexpr double kAlgaeRemoveHeight1 = 11.0;
+    constexpr double kAlgaeRemoveHeight1 = 10.0;
     constexpr double kAlgaeRemoveHeight2 = 19.5;
     constexpr double kAlgaeScoreHeight = 3.0;
 

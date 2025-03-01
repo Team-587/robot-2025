@@ -39,6 +39,8 @@ class Climber : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   SparkMax m_climberMotor{DriveConstants::kClimberCanId, SparkMax::MotorType::kBrushless};
   SparkMax m_climberMotor2{DriveConstants::kClimberCanId2, SparkMax::MotorType::kBrushless};
+  SparkMax m_climberHopperMotor{DriveConstants::kClimberHopperCanId, SparkMax::MotorType::kBrushless};
+  SparkMax m_climberHopperMotor2{DriveConstants::kClimberHopperCanId2, SparkMax::MotorType::kBrushless};
   #endif
 
   frc::XboxController m_codriverController{OIConstants::kCoDriverControllerPort};

@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 5.97,
+        "x": 5.87,
         "y": 3.87
       },
       "prevControl": {
-        "x": 6.548352272727272,
+        "x": 6.448352272727273,
         "y": 3.87
       },
       "nextControl": null,
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Middle Level 4",
+  "folder": "Steve Nash",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

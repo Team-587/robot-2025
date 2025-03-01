@@ -211,5 +211,18 @@ static SparkMaxConfig& climberConfig2() {
 
     return climberConfig2;
 }
+
+static SparkMaxConfig& climberHopperConfig2() {
+    static SparkMaxConfig climberHopperConfig2{};
+
+    // Use module constants to calculate conversion factor
+    //double turningFactor = 2 * std::numbers::pi;
+
+    climberHopperConfig2.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
+        .SmartCurrentLimit(50)
+        .Follow(DriveConstants::kClimberHopperCanId, true);
+
+    return climberHopperConfig2;
+}
   
 }  // namespace Configs

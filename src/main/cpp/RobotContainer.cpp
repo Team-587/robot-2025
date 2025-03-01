@@ -58,8 +58,9 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
   
   pathplanner::NamedCommands::registerCommand("Level 4", frc2::cmd::Sequence( 
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem}),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.80_s),
+                                                         frc2::cmd::Wait(2.95_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL4Speed); }, {&m_coralSubsystem}),
                                                          frc2::cmd::Wait(1.0_s),
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
@@ -91,27 +92,33 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights() {
             true);
       },
       {&m_drive}));
-
 const std::string Test_Str = "Test";
-const std::string ML4_Left_Str = "ML4 - Left";
-const std::string ML4_Right_Str = "ML4 - Right";
+const std::string Curry_Str = "Curry";
+const std::string LeBron_Str = "LeBron";
 const std::string Level1_Str = "Level1";
-const std::string MiddleLevel4_Str = "Middle Level 4";
+const std::string SteveNash_Str = "Steve Nash";
 
+std::cout << "Before Auto\n";
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
-ML4_Left = PathPlannerAuto(ML4_Left_Str).ToPtr().Unwrap();
-ML4_Right = PathPlannerAuto(ML4_Right_Str).ToPtr().Unwrap();
+std::cout << "After Test\n";
+Curry = PathPlannerAuto(Curry_Str).ToPtr().Unwrap();
+std::cout << "After Curry\n";
+LeBron = PathPlannerAuto(LeBron_Str).ToPtr().Unwrap();
+std::cout << "After LeBron\n";
 Level1 = PathPlannerAuto(Level1_Str).ToPtr().Unwrap();
-MiddleLevel4 = PathPlannerAuto(MiddleLevel4_Str).ToPtr().Unwrap();
+std::cout << "After Level 1\n";
+SteveNash = PathPlannerAuto(SteveNash_Str).ToPtr().Unwrap();
+std::cout << "All Autos\n";
 
 m_chooser.SetDefaultOption(Test_Str, Test.get());
-m_chooser.AddOption(ML4_Left_Str, ML4_Left.get());
-m_chooser.AddOption(ML4_Right_Str, ML4_Right.get());
+m_chooser.AddOption(Curry_Str, Curry.get());
+m_chooser.AddOption(LeBron_Str, LeBron.get());
 m_chooser.AddOption(Level1_Str, Level1.get());
-m_chooser.AddOption(MiddleLevel4_Str, MiddleLevel4.get());
+m_chooser.AddOption(SteveNash_Str, SteveNash.get());
 //m_chooser.AddOption(Test_Str, Test.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
+std::cout << "Autos Complete\n";
 
 }
 
@@ -141,15 +148,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
   //frc2::JoystickButton coDriverRB(&m_codriverController, frc::XboxController::Button::kRightBumper);
   //coDriverRB.OnTrue(new frc2::RunCommand([this] { m_coralSubsystem.setState(CoralSubsystem::SCORE); }, {&m_coralSubsystem}));
-
-  frc2::JoystickButton DriveLB(&m_driverController, frc::XboxController::Button::kLeftBumper);
-  DriveLB.WhileTrue(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::SCORE); }, {&m_ballSubsystem}));
-
-  frc2::JoystickButton DriveRB(&m_driverController, frc::XboxController::Button::kRightBumper);
-  DriveRB.WhileTrue(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::INTAKE); }, {&m_ballSubsystem}));
-
-  DriveRB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
-  DriveLB.WhileFalse(new frc2::RunCommand([this] {m_ballSubsystem.setState(BallSubsystem::STOW); }, {&m_ballSubsystem}));
 
   frc2::JoystickButton startButtonCoDrive{&m_codriverController, frc::XboxController::Button::kStart};
   startButtonCoDrive.OnTrue(&m_StartClimb);

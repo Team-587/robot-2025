@@ -17,7 +17,6 @@
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/CoralSubsystem.h"
-#include "subsystems/BallSubsystem.h"
 #include "subsystems/Lights.h"
 #include "subsystems/Climber.h"
 
@@ -35,7 +34,6 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
   CoralSubsystem m_coralSubsystem;
-  BallSubsystem m_ballSubsystem;
   Lights m_lights;
 
 private:
@@ -62,8 +60,8 @@ private:
 
   
   std::unique_ptr<frc2::Command> Test;
-  std::unique_ptr<frc2::Command> ML4_Right;
-  std::unique_ptr<frc2::Command> ML4_Left;
+  std::unique_ptr<frc2::Command> LeBron;
+  std::unique_ptr<frc2::Command> Curry;
   std::unique_ptr<frc2::Command> Level1;
-  std::unique_ptr<frc2::Command> MiddleLevel4;
+  std::unique_ptr<frc2::Command> SteveNash;
 };

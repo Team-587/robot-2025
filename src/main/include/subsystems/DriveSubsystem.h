@@ -17,6 +17,8 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+//#include <choreo/trajectory/SwerveSample.h>
+//#include <frc/controller/PIDController.h>
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
@@ -24,6 +26,12 @@
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
+
+  //void FollowTrajectory(const choreo::SwerveSample& sample);
+
+  //void AutonomousInit();
+
+  //void AutonomousPeriodic();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -120,10 +128,19 @@ class DriveSubsystem : public frc2::SubsystemBase {
   MAXSwerveModule m_frontRight;
   MAXSwerveModule m_rearRight;
 
+  //std::optional<choreo::Trajectory<choreo::SwerveSample>> trajectory = choreo::Choreo::LoadTrajectory<choreo::SwerveSample>("Score");
+
+  
+
   double distanceAprilTag;
   double targetOffsetAngle_Horizontal;
   double targetOffsetAngle_Vertical;
   double distanceOff;
+
+  //frc::PIDController xController{10.0, 0.0, 0.0};
+  //frc::PIDController yController{10.0, 0.0, 0.0};
+  //frc::PIDController headingController{7.5, 0.0, 0.0};
+
 
   // The gyro sensor
   //frc::ADIS16470_IMU m_gyro;

@@ -8,7 +8,6 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/DriverStation.h>
 #include <frc/shuffleboard/Shuffleboard.h>
-#include "subsystems/BallSubsystem.h"
 #include "subsystems/CoralSubsystem.h"
 
 
@@ -33,7 +32,7 @@ int prevPov;
 frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatchTime());
 //std::cout << pov << "\n";
 
-    if(pov == 0){
+    /*if(pov == 0){
         m_container.m_ballSubsystem.setState(BallSubsystem::INTAKE);
         //std::cout << "ALGAE INTAKE\n";
         //ALGAE INTAKE
@@ -47,7 +46,7 @@ frc::SmartDashboard::PutNumber("Match Time", (double)frc::DriverStation::GetMatc
         //ALGAE STOW
     } else if(pov == -1 && m_container.m_ballSubsystem.CurrentState == BallSubsystem::INTAKE) {
       m_container.m_ballSubsystem.setState(BallSubsystem::HALFSTOW);
-    }
+    }*/
 
     /*if(povCoDriver == 270) {
         m_container.m_coralSubsystem.setState(CoralSubsystem::ALGAE1);

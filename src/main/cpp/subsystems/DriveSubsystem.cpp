@@ -25,6 +25,8 @@
 #include <cmath>
 #include <vector>
 #include "Constants.h"
+//#include <choreo/trajectory/Trajectory.h>
+//#include <choreo/Choreo.h>
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -51,6 +53,10 @@ DriveSubsystem::DriveSubsystem()
                     frc::Pose2d{}, {0.1, 0.1, 0.1}, {0.1, 0.1, 0.1}}
 
 {
+
+                  //auto trajectory = choreo::Choreo::LoadTrajectory<choreo::SwerveSample>("Score");
+
+                  //headingController.EnableContinuousInput(-M_PI, M_PI);
 
                   frc::SmartDashboard::PutData("Field", &m_field);
 
@@ -174,7 +180,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 //rot = 0.0_rad_per_s;
 
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
-double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.5) + 1.0;
+double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.6) + 1.0;
   // Convert the commanded speeds into the correct units for the drivetrain
 
   if(xSpeed < -0.01_mps && xSpeed > -0.1_mps){
@@ -263,6 +269,17 @@ double DriveSubsystem::GetTurnRate() {
 
 frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
 
+/*void DriveSubsystem::FollowTrajectory(const choreo::SwerveSample& sample) {
+    frc::Pose2d pose = GetPose();
+
+
+    units::meters_per_second_t xFeedback{xController.Calculate(pose.X().value(), sample.x.value())};
+    units::meters_per_second_t yFeedback{yController.Calculate(pose.Y().value(), sample.y.value())};
+    units::radians_per_second_t headingFeedback{headingController.Calculate(pose.Rotation().Radians().value(), sample.heading.value())};
+
+    frc::ChassisSpeeds::FromFieldRelativeSpeeds(sample.vx + xFeedback, sample.vy + yFeedback, sample.omega + headingFeedback, DriveSubsystem::GetHeading());
+}
+*/
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
     frc::Pose2d tmpPose = GetPose();
     std::cout << "Reset Odometry start X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";

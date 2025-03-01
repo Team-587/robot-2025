@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.038,
-        "y": 6.871
+        "x": 0.8575568181818182,
+        "y": 7.131150568181818
       },
       "prevControl": {
-        "x": 1.6362960283610322,
-        "y": 7.0405150202100275
+        "x": 1.4558528465428506,
+        "y": 7.300665588391845
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,10 +56,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -57.241
+    "rotation": -54.32359177813804
   },
   "reversed": false,
-  "folder": "ML4 - Left",
+  "folder": "Curry",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -123.366

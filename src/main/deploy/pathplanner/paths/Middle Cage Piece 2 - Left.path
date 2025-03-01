@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.548,
-        "y": 4.885
+        "x": 3.51,
+        "y": 4.947372159090909
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1544204545454546,
-        "y": 6.307713068181817
+        "x": 2.3233806818181826,
+        "y": 6.463053977272727
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.8695945945945946,
-        "y": 6.870945945945945
+        "x": 0.9173863636363636,
+        "y": 6.971605113636364
       },
       "prevControl": {
-        "x": 1.4678906229556261,
-        "y": 7.0404609661559725
+        "x": 2.6324999999999985,
+        "y": 6.403224431818182
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
     "rotation": -53.74616226255522
   },
   "reversed": false,
-  "folder": "ML4 - Left",
+  "folder": "Curry",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -59.27101904123233

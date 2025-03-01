@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.219,
-        "y": 5.795
+        "x": 1.156,
+        "y": 0.912
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.970712348919281,
-        "y": 5.8242103118918465
+        "x": 1.923888513513513,
+        "y": 1.4958513513513507
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.08,
-        "y": 5.09
+        "x": 3.893,
+        "y": 2.829
       },
       "prevControl": {
-        "x": 5.354562524476082,
-        "y": 5.03508715857542
+        "x": 2.707255363912381,
+        "y": 1.8308639494243018
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5726915520628683,
+      "minWaypointRelativePos": 0.5649224806201543,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.25,
-        "maxAcceleration": 3.5,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -121.41709916370858
+    "rotation": 57.600159826080684
   },
   "reversed": false,
-  "folder": "Curry",
+  "folder": "LeBron",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 52.69605172201653
   },
   "useDefaultConstraints": true
 }
