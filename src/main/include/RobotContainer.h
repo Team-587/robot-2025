@@ -19,6 +19,7 @@
 #include "subsystems/CoralSubsystem.h"
 #include "subsystems/Lights.h"
 #include "subsystems/Climber.h"
+#include "Commands/AutoAlign.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -35,6 +36,9 @@ class RobotContainer {
 
   CoralSubsystem m_coralSubsystem;
   Lights m_lights;
+  DriveSubsystem m_drive;
+  AutoAlign m_autoAlignRight;
+  AutoAlign m_autoAlignLeft;
 
 private:
 
@@ -45,7 +49,6 @@ private:
   // The robot's subsystems and commands are defined here...
  
   // The robot's subsystems
-  DriveSubsystem m_drive;
   Climber m_climber;
   
   
@@ -64,4 +67,8 @@ private:
   std::unique_ptr<frc2::Command> Curry;
   std::unique_ptr<frc2::Command> Level1;
   std::unique_ptr<frc2::Command> SteveNash;
+  std::unique_ptr<frc2::Command> Autoalign;
+
+
 };
+  

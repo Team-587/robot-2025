@@ -7,6 +7,10 @@
 #include <frc/geometry/Rotation2d.h>
 
 #include "Configs.h"
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include "LimelightHelpers.h"
+#include <frc/DriverStation.h>
 
 using namespace rev::spark;
 
@@ -17,6 +21,7 @@ MAXSwerveModule::MAXSwerveModule(const int drivingCANId, const int turningCANId,
   // Apply the respective configurations to the SPARKS. Reset parameters before
   // applying the configuration to bring the SPARK to a known good state.
   // Persist the settings to the SPARK to avoid losing them on a power cycle.
+
   m_drivingSpark.Configure(Configs::MAXSwerveModule::DrivingConfig(),
                            SparkBase::ResetMode::kResetSafeParameters,
                            SparkBase::PersistMode::kPersistParameters);
@@ -28,6 +33,9 @@ MAXSwerveModule::MAXSwerveModule(const int drivingCANId, const int turningCANId,
   m_desiredState.angle = 
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
   m_drivingEncoder.SetPosition(0);
+
+  frc::SmartDashboard::PutNumber("Drving P", drivingP);
+  frc::SmartDashboard::PutNumber("Drving FF", drivingFF);
 }
 
 frc::SwerveModuleState MAXSwerveModule::GetState() const {
@@ -54,9 +62,13 @@ void MAXSwerveModule::SetDesiredState(
   // Optimize the reference state to avoid spinning further than 90 degrees.
   correctedDesiredState.Optimize(
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()}));
-
-  m_drivingClosedLoopController.SetReference(
-      (double)correctedDesiredState.speed, SparkMax::ControlType::kVelocity);
+  if (frc::DriverStation::IsAutonomousEnabled()) {
+    m_drivingClosedLoopController.SetReference(
+      (double)correctedDesiredState.speed, SparkMax::ControlType::kVelocity, rev::spark::kSlot0);
+  }else{
+    m_drivingClosedLoopController.SetReference(
+      (double)correctedDesiredState.speed, SparkMax::ControlType::kVelocity, rev::spark::kSlot1);
+  }
   m_turningClosedLoopController.SetReference(
       correctedDesiredState.angle.Radians().value(),
       SparkMax::ControlType::kPosition);

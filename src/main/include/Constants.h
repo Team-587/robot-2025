@@ -14,9 +14,10 @@
 #include <numbers>
 
 #pragma once
-//#define haveClimber
+#define haveClimber
 #define homeField
 //#define usingNeo
+#define usingAutoAlign
 
 
 /**
@@ -89,7 +90,7 @@ constexpr int kUppiesSwitch = 2;
 constexpr int kDistanceSensor = 0;
 
 constexpr int kLEDPort = 0;
-constexpr int kLEDtotalLength = 36; //Total LED length should be multiples of 2
+constexpr int kLEDtotalLength = 69; //Total LED length should be multiples of 2
 }  // namespace DriveConstants
 
 namespace ModuleConstants {
@@ -171,7 +172,7 @@ namespace CoralConstants {
 
     //House Constants
     constexpr double kHouseIntakeSpeed = 0.30;
-    constexpr double kHouseL1Speed = -0.13;
+    constexpr double kHouseL1Speed = -0.16;
     constexpr double kHouseL2Speed = -0.3;
     constexpr double kHouseL3Speed = -0.3;
     constexpr double kHouseL4Speed = -0.3;

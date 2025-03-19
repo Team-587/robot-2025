@@ -40,6 +40,7 @@ void CoralSubsystem::Periodic() {
     double coDriverRT = m_codriverController.GetRightTriggerAxis();
 
     frc::SmartDashboard::PutNumber("Distance", distance);
+    frc::SmartDashboard::PutBoolean("Have Coral", haveCoral);
     #ifndef usingNeo
     frc::SmartDashboard::PutNumber("Angle", m_wristEncoder.GetPosition());
     frc::SmartDashboard::PutNumber("Height", m_uppiesEncoder1.GetPosition());
@@ -84,7 +85,7 @@ void CoralSubsystem::Periodic() {
 
     //STOW
     if(desiredState == STOW){
-        std::cout << "STOW\n";
+        //std::cout << "STOW\n";
         m_houseMotor.Set(CoralConstants::kBackspin);
         if(haveCoral == true){
             m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
@@ -119,7 +120,7 @@ void CoralSubsystem::Periodic() {
             //houseMovingAngle = true;
             //sleep(10);
             std::cout << "House Stopped\n";
-            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            //m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
     
@@ -198,36 +199,45 @@ void CoralSubsystem::Periodic() {
     }
     //LEVEL4
     if(desiredState == LEVEL4){
-        std::cout << "LEVEL 4\n";
-        // houseMovingAngle = true;
-        if(checkWristAngle(CoralConstants::kWristMoveAngle)){
-            m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL4Height, rev::spark::SparkLowLevel::ControlType::kPosition);
-        }
-         if(checkUppiesHeight(CoralConstants::kUppiesL4Height)){
+        if(frc::DriverStation::IsAutonomousEnabled()){
+            std::cout << "LEVEL 4\n";
+            // houseMovingAngle = true;
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristL4Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            if(checkWristAngle(CoralConstants::kWristL4Angle)){
+                m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL4Height, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }
+        }else if(frc::DriverStation::IsTeleopEnabled()){
+            if(checkWristAngle(CoralConstants::kWristMoveAngle)){
+                m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL4Height, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }
+            if(checkUppiesHeight(CoralConstants::kUppiesL4Height)){
                  m_wristClosedLoopController.SetReference(CoralConstants::kWristL4Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
-        }else{
-            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }else{
+                m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+            }
         }
     }
 
     if(desiredState == ALGAE1) {
-        m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         if(checkWristAngle(CoralConstants::kWristMoveAngle)) {
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kAlgaeRemoveHeight1, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kAlgaeRemoveHeight1)) {
             m_wristClosedLoopController.SetReference(CoralConstants::kBallRemoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
             m_houseMotor.Set(CoralConstants::kRemoveSpeed);
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
     if(desiredState == ALGAE2) {
-        m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         if(checkWristAngle(CoralConstants::kWristMoveAngle)) {
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kAlgaeRemoveHeight2, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kAlgaeRemoveHeight2)) {
             m_wristClosedLoopController.SetReference(CoralConstants::kBallRemoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
             m_houseMotor.Set(CoralConstants::kRemoveSpeed);
+        }else{
+            m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         } 
     }
 

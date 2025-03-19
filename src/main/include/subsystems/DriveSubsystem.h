@@ -17,6 +17,7 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "subsystems/CoralSubsystem.h"
 //#include <choreo/trajectory/SwerveSample.h>
 //#include <frc/controller/PIDController.h>
 
@@ -35,7 +36,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
+   * 
+   * 
    */
+
+  void setCoralDriveSubsystem(CoralSubsystem *tmpcs){p_coralSubsystem = tmpcs;}; 
+
+  void setPreferedAprilTag(int tag);
+  
   void Periodic() override;
 
   // Subsystem methods go here.
@@ -119,6 +127,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   void driveRobotRelative(const frc::ChassisSpeeds& robotRelativeSpeeds);
 
+  double id;
+  int preferedTag = -1;
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -153,5 +164,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   frc::SwerveDriveOdometry<4> m_odometry;
 
-  frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
+  CoralSubsystem *p_coralSubsystem = NULL;
+
+  public: 
+  //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
 };

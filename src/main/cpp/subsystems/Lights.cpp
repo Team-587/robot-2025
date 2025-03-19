@@ -35,6 +35,9 @@ void Lights::Periodic() {
             LEDArray[j + 1].SetRGB(252, 186, 3);
         }
     }
+    m_led.SetData(LEDArray);
+    m_led.Start();
+    /*
     if(p_coralSubsystem->readyToScore){
         for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
             LEDArray[i].SetRGB(0, 255, 25);
@@ -44,8 +47,5 @@ void Lights::Periodic() {
             LEDArray[j].SetRGB(0, 133, 202);
             LEDArray[j + 1].SetRGB(252, 186, 3);
         }
-    }
-    
-   m_led.SetData(LEDArray);
-  m_led.Start();
+    }*/
 }

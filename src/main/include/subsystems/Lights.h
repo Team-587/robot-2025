@@ -27,7 +27,7 @@ class Lights : public frc2::SubsystemBase {
   int ledLoopCount;
   int disableLoopCount;
 
-  frc::AddressableLED m_led{DriveConstants::kLEDPort};
+  frc::AddressableLED m_led{DriveConstants::kLEDPort}; 
   std::array<frc::AddressableLED::LEDData, DriveConstants::kLEDtotalLength > LEDArray;
 
   CoralSubsystem *p_coralSubsystem = NULL;

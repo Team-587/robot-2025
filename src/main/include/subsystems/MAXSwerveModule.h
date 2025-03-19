@@ -11,6 +11,7 @@
 #include <rev/SparkClosedLoopController.h>
 #include <rev/SparkMax.h>
 #include <rev/SparkRelativeEncoder.h>
+#include <rev/config/SparkMaxConfig.h>
 
 using namespace rev::spark;
 
@@ -67,4 +68,9 @@ class MAXSwerveModule {
   double m_chassisAngularOffset = 0;
   frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
                                         frc::Rotation2d()};
+  
+  SparkMaxConfig drivingConfig;
+
+  double drivingP;
+  double drivingFF;
 };

@@ -25,6 +25,7 @@
 #include <cmath>
 #include <vector>
 #include "Constants.h"
+#include <frc/controller/PIDController.h>
 //#include <choreo/trajectory/Trajectory.h>
 //#include <choreo/Choreo.h>
 
@@ -45,12 +46,12 @@ DriveSubsystem::DriveSubsystem()
                      m_NavX.GetRotation2d().Radians()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}},
+                 frc::Pose2d{}}/*,
       m_poseEstimator{kDriveKinematics, frc::Rotation2d(units::radian_t{
                      m_NavX.GetRotation2d().Radians()}),
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                     m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                    frc::Pose2d{}, {0.1, 0.1, 0.1}, {0.1, 0.1, 0.1}}
+                    frc::Pose2d{}, {0.1, 0.1, 0.1}, {0.1, 0.1, 0.1}}*/
 
 {
 
@@ -91,25 +92,35 @@ DriveSubsystem::DriveSubsystem()
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_field.SetRobotPose(m_odometry.GetPose());
+  //m_field.SetRobotPose(m_odometry.GetPose());
   
   //Telemetry
   frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
   frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
   frc::SmartDashboard::PutNumber("Roll", m_NavX.GetRoll());
 
-  std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+  /*std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
   targetOffsetAngle_Horizontal = table->GetNumber("tx", 0.0);
   targetOffsetAngle_Vertical = table->GetNumber("ty", 0.0);
   //double targetArea = table->GetNumber("ta", 0.0);
   //double targetSkew = table->GetNumber("ts", 0.0);
 
   frc::SmartDashboard::PutNumber("LL tx", targetOffsetAngle_Horizontal);
-  frc::SmartDashboard::PutNumber("LL ty", targetOffsetAngle_Vertical);
+  frc::SmartDashboard::PutNumber("LL ty", targetOffsetAngle_Vertical);*/
+    
+  /*std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+  frc::SmartDashboard::PutNumber("Limelight Left X", positions[2]);
+  frc::SmartDashboard::PutNumber("Limelight Left Y", positions[0]);
+  frc::SmartDashboard::PutNumber("Limelight Left Rot", positions[4]);*/
+
+  std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
+  frc::SmartDashboard::PutNumber("LR X", positions[2]);
+  frc::SmartDashboard::PutNumber("LR Y", positions[0]);
+  frc::SmartDashboard::PutNumber("LR Rot", positions[4]);
   //frc::SmartDashboard::PutNumber("LL ta", targetArea);
   //frc::SmartDashboard::PutNumber("LL ts", targetSkew);
 
-  double cameraDegree = 30.0;
+  /*double cameraDegree = 30.0;
   double cameraHeight = 6.0;
   double aprilTagHeight = 12.25;
 
@@ -118,14 +129,14 @@ void DriveSubsystem::Periodic() {
   distanceOff = (distanceAprilTag - 70.0) / 39.37;
   frc::SmartDashboard::PutNumber("Distance Off", distanceOff);
   double distanceCenterAprilTag = distanceAprilTag * (tan((targetOffsetAngle_Horizontal) * std::numbers::pi / 180));
-  frc::SmartDashboard::PutNumber("Distance From Center", distanceCenterAprilTag);
+  frc::SmartDashboard::PutNumber("Distance From Center", distanceCenterAprilTag);*/
 
   m_odometry.Update(frc::Rotation2d(units::radian_t{
                         m_NavX.GetRotation2d().Radians()}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
-  m_poseEstimator.Update(frc::Rotation2d(units::radian_t{
+  /*m_poseEstimator.Update(frc::Rotation2d(units::radian_t{
                         m_NavX.GetRotation2d().Radians()}),
                         {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                         m_frontRight.GetPosition(), m_rearRight.GetPosition()});
@@ -147,12 +158,15 @@ void DriveSubsystem::Periodic() {
         }
 
         frc::Pose2d position = m_poseEstimator.GetEstimatedPosition();
+        id = table->GetNumber("tid", 0.0);
+        //frc::SmartDashboard::PutNumber("ID", id);
         frc::SmartDashboard::PutNumber("position X", (double)position.X());
         frc::SmartDashboard::PutNumber("position Y", (double)position.Y());
 
     if(frc::DriverStation::IsAutonomousEnabled()){
-        std::cout << "position" << (double)m_odometry.GetPose().X() << ", " << (double)m_odometry.GetPose().Y() << "\n";
-    }            
+        std::cout << "position" << (double)m_poseEstimator.GetEstimatedPosition().X() << ", " << (double)m_poseEstimator.GetEstimatedPosition().Y() << "\n";
+    } 
+    */      
 }
   
 
@@ -161,7 +175,38 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
     //targetSpeeds.vx = -targetSpeeds.vx;
    // targetSpeeds.vy = -targetSpeeds.vy;
    // targetSpeeds.omega = -targetSpeeds.omega;
+   if(p_coralSubsystem->haveCoral && preferedTag != -1){
+    double DesiredX = -0.47;
+    double DesiredY = 0.19;
+    double DesiredRot = -2.5;
+    std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+    double id = table->GetNumber("tid", 0.0);
+    std::cout << "Auto Align Executed: ID" << id << "\n";
+    std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+    if(id == preferedTag){
+        if(positions[2] > -0.5){
+          frc::PIDController m_xController(1.2, 0.0, 0.0);
+          frc::PIDController m_yController(1.2, 0.0, 0.0003);
+          frc::PIDController m_rotController(0.03, 0.0, 0.0);
 
+          m_rotController.SetSetpoint(DesiredRot);
+          m_rotController.SetTolerance(0.05);
+          m_xController.SetSetpoint(DesiredX);
+          m_xController.SetTolerance(0.05);
+          m_yController.SetSetpoint(DesiredY);
+          m_yController.SetTolerance(0.05);
+
+          double xSpeed = m_xController.Calculate(positions[2]);
+          double ySpeed = -m_yController.Calculate(positions[0]);
+          double rotValue = -m_rotController.Calculate(positions[4]);
+
+          targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
+          targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
+          targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
+          std::cout << "See April Tag: " << id;
+        }
+    }
+ }
     if (frc::DriverStation::IsAutonomousEnabled()) {
         std::cout << "auto drive speed x:" << (double)targetSpeeds.vx << " y:" << (double)targetSpeeds.vy << " ang:" << (double)targetSpeeds.omega << "\n";
     }
@@ -180,7 +225,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 //rot = 0.0_rad_per_s;
 
 frc::XboxController m_driverController{OIConstants::kDriverControllerPort};
-double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.6) + 1.0;
+double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.0;
   // Convert the commanded speeds into the correct units for the drivetrain
 
   if(xSpeed < -0.01_mps && xSpeed > -0.1_mps){
@@ -267,7 +312,10 @@ double DriveSubsystem::GetTurnRate() {
   return -m_NavX.GetRate();
 }
 
-frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
+frc::Pose2d DriveSubsystem::GetPose() { 
+    return m_odometry.GetPose();
+    //return m_poseEstimator.GetEstimatedPosition(); 
+}
 
 /*void DriveSubsystem::FollowTrajectory(const choreo::SwerveSample& sample) {
     frc::Pose2d pose = GetPose();
@@ -289,7 +337,10 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
       pose);
-
     tmpPose = GetPose();
     std::cout << "Reset Odometry after X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
-}   
+} 
+
+void DriveSubsystem::setPreferedAprilTag(int tag){
+    preferedTag = tag;
+}

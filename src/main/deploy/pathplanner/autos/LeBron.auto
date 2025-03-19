@@ -77,6 +77,25 @@
           "data": {
             "name": "Stow"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 4"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Middle Cage Score 2 - Right"
+                }
+              }
+            ]
+          }
         }
       ]
     }

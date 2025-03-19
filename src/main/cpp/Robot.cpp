@@ -9,10 +9,13 @@
 #include <frc/DriverStation.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include "subsystems/CoralSubsystem.h"
+#include <frc/PowerDistribution.h>
 
 
 void Robot::RobotInit() {
   frc::CameraServer::StartAutomaticCapture();
+  frc::PowerDistribution PD{1, frc::PowerDistribution::ModuleType::kRev};
+  PD.SetSwitchableChannel(true);
 }
 
 /**

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.19391891891892,
-        "y": 2.3352195945945935
+        "x": 1.087,
+        "y": 1.039
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9456312678382,
-        "y": 2.3644299064864405
+        "x": 1.7751420454495597,
+        "y": 1.5877471590859222
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.866,
-        "y": 2.983
+        "x": 3.5199715909090905,
+        "y": 2.953053977272727
       },
       "prevControl": {
-        "x": 5.111145168922102,
-        "y": 2.933970966212312
+        "x": 3.091193181818182,
+        "y": 2.494360795454546
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5939922480620142,
+      "minWaypointRelativePos": 0.4312377210216131,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 3.5,
-        "maxAcceleration": 3.5,
+        "maxVelocity": 2.0,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 110.39523955444935
+    "rotation": 54.83356396420719
   },
   "reversed": false,
   "folder": "LeBron",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 52.306594614644084
   },
   "useDefaultConstraints": true
 }

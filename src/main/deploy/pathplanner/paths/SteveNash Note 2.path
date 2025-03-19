@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.19391891891892,
-        "y": 2.3352195945945935
+        "x": 5.87,
+        "y": 3.87
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9456312678382,
-        "y": 2.3644299064864405
+        "x": 7.24934659090909,
+        "y": 6.662485795454545
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.866,
-        "y": 2.983
+        "x": 0.897,
+        "y": 7.43
       },
       "prevControl": {
-        "x": 5.111145168922102,
-        "y": 2.933970966212312
+        "x": 1.4055511363636368,
+        "y": 7.310340909090908
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,21 +29,7 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5939922480620142,
-      "maxWaypointRelativePos": 1.0,
-      "constraints": {
-        "maxVelocity": 3.5,
-        "maxAcceleration": 3.5,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 400.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -56,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 110.39523955444935
+    "rotation": -52.77527061716811
   },
   "reversed": false,
-  "folder": "LeBron",
+  "folder": "Steve Nash",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
