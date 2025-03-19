@@ -20,6 +20,8 @@
 #include "subsystems/Lights.h"
 #include "subsystems/Climber.h"
 #include "Commands/AutoAlign.h"
+#include "Commands/AutoAlignLeft.h"
+#include "Commands/AutoAlignRight.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -37,8 +39,10 @@ class RobotContainer {
   CoralSubsystem m_coralSubsystem;
   Lights m_lights;
   DriveSubsystem m_drive;
-  AutoAlign m_autoAlignRight;
-  AutoAlign m_autoAlignLeft;
+  //AutoAlign m_autoAlignRight;
+  //AutoAlign m_autoAlignLeft;
+  AutoAlignLeft m_autoAlignLeft;
+  AutoAlignRight m_autoAlignRight;
 
 private:
 

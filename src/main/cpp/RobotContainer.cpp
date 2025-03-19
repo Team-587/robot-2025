@@ -27,7 +27,8 @@
 using namespace DriveConstants;
 using namespace pathplanner;
 
-RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights(), m_drive(), m_autoAlignRight(true, &m_drive), m_autoAlignLeft(false, &m_drive){
+RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights(), m_drive(), 
+m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
   // Initialize all of your commands and subsystems here
   m_lights.setCoralSubsystem(&m_coralSubsystem);
   m_drive.setCoralDriveSubsystem(&m_coralSubsystem);
@@ -80,7 +81,8 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights(), m_drive(), m_
 
  pathplanner::NamedCommands::registerCommand("Tag 20", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(20); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Tag 19", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(19); }, {&m_drive}));
-
+  pathplanner::NamedCommands::registerCommand("Right", frc2::cmd::RunOnce([this] {this->m_drive.setRight(true); }, {&m_drive}));
+  pathplanner::NamedCommands::registerCommand("Left", frc2::cmd::RunOnce([this] {this->m_drive.setRight(false); }, {&m_drive}));
 
   // Set up default drive command
   // The left stick controls translation of the robot.

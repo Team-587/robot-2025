@@ -176,34 +176,67 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
    // targetSpeeds.vy = -targetSpeeds.vy;
    // targetSpeeds.omega = -targetSpeeds.omega;
    if(p_coralSubsystem->haveCoral && preferedTag != -1){
-    double DesiredX = -0.47;
-    double DesiredY = 0.19;
-    double DesiredRot = -2.5;
-    std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
-    double id = table->GetNumber("tid", 0.0);
-    std::cout << "Auto Align Executed: ID" << id << "\n";
-    std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
-    if(id == preferedTag){
-        if(positions[2] > -0.5){
-          frc::PIDController m_xController(1.2, 0.0, 0.0);
-          frc::PIDController m_yController(1.2, 0.0, 0.0003);
-          frc::PIDController m_rotController(0.03, 0.0, 0.0);
+    if(Right){
+        double DesiredX = -0.47;
+        double DesiredY = 0.19;
+        double DesiredRot = -2.5;
+        std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+        double id = table->GetNumber("tid", 0.0);
+        std::cout << "Auto Align Executed: ID" << id << "\n";
+        std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+        if(id == preferedTag){
+            if(positions[2] > -0.5){
+                frc::PIDController m_xController(1.2, 0.0, 0.0);
+                frc::PIDController m_yController(1.2, 0.0, 0.0003);
+                frc::PIDController m_rotController(0.03, 0.0, 0.0);
 
-          m_rotController.SetSetpoint(DesiredRot);
-          m_rotController.SetTolerance(0.05);
-          m_xController.SetSetpoint(DesiredX);
-          m_xController.SetTolerance(0.05);
-          m_yController.SetSetpoint(DesiredY);
-          m_yController.SetTolerance(0.05);
+                m_rotController.SetSetpoint(DesiredRot);
+                m_rotController.SetTolerance(0.05);
+                m_xController.SetSetpoint(DesiredX);
+                m_xController.SetTolerance(0.05);
+                m_yController.SetSetpoint(DesiredY);
+                m_yController.SetTolerance(0.05);
 
-          double xSpeed = m_xController.Calculate(positions[2]);
-          double ySpeed = -m_yController.Calculate(positions[0]);
-          double rotValue = -m_rotController.Calculate(positions[4]);
+                double xSpeed = m_xController.Calculate(positions[2]);
+                double ySpeed = -m_yController.Calculate(positions[0]);
+                double rotValue = -m_rotController.Calculate(positions[4]);
 
-          targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
-          targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
-          targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
-          std::cout << "See April Tag: " << id;
+                targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
+                targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
+                targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
+                std::cout << "See April Tag: " << id;
+            }
+        }
+    }else if(Right == false){
+        double DesiredX = -0.47;
+        double DesiredY = -0.18;
+        double DesiredRot = -1.025;
+        std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
+        double id = table->GetNumber("tid", 0.0);
+        std::cout << "Auto Align Executed: ID" << id << "\n";
+        std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
+        if(id == preferedTag){
+            if(positions[2] > -0.5){
+                frc::PIDController m_xController(1.2, 0.0, 0.0);
+                frc::PIDController m_yController(1.2, 0.0, 0.0003);
+                frc::PIDController m_rotController(0.03, 0.0, 0.0);
+
+                m_rotController.SetSetpoint(DesiredRot);
+                m_rotController.SetTolerance(0.05);
+                m_xController.SetSetpoint(DesiredX);
+                m_xController.SetTolerance(0.05);
+                m_yController.SetSetpoint(DesiredY);
+                m_yController.SetTolerance(0.05);
+
+                double xSpeed = m_xController.Calculate(positions[2]);
+                double ySpeed = -m_yController.Calculate(positions[0]);
+                double rotValue = -m_rotController.Calculate(positions[4]);
+
+                targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
+                targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
+                targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
+                std::cout << "See April Tag: " << id;
+            }
         }
     }
  }
@@ -343,4 +376,8 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 
 void DriveSubsystem::setPreferedAprilTag(int tag){
     preferedTag = tag;
+}
+
+void DriveSubsystem::setRight(bool right){
+    Right = right;
 }

@@ -43,6 +43,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void setCoralDriveSubsystem(CoralSubsystem *tmpcs){p_coralSubsystem = tmpcs;}; 
 
   void setPreferedAprilTag(int tag);
+  void setRight(bool right);
   
   void Periodic() override;
 
@@ -129,6 +130,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   double id;
   int preferedTag = -1;
+  bool Right;
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
