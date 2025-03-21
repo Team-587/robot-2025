@@ -41,7 +41,7 @@ class AutoAlignLeft
 
   bool IsFinished() override;
 
-  double DesiredX = -0.47;
+  double DesiredX = -0.44;
   double DesiredY = -0.18;
   double DesiredRot = -1.025;
 

@@ -19,7 +19,7 @@
 #include "subsystems/CoralSubsystem.h"
 #include "subsystems/Lights.h"
 #include "subsystems/Climber.h"
-#include "Commands/AutoAlign.h"
+//#include "Commands/AutoAlign.h"
 #include "Commands/AutoAlignLeft.h"
 #include "Commands/AutoAlignRight.h"
 
@@ -71,7 +71,7 @@ private:
   std::unique_ptr<frc2::Command> Curry;
   std::unique_ptr<frc2::Command> Level1;
   std::unique_ptr<frc2::Command> SteveNash;
-  std::unique_ptr<frc2::Command> Autoalign;
+  //std::unique_ptr<frc2::Command> Autoalign;
 
 
 };

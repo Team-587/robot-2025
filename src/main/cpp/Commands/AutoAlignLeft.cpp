@@ -15,6 +15,7 @@ AutoAlignLeft::AutoAlignLeft(DriveSubsystem *drivebase)
     m_drivebase(drivebase) {
   // Use addRequirements() here to declare subsystem dependencies.
   this->AddRequirements(m_drivebase);
+  std::cout << "LEFT\n";
 }
 
 // Called when the command is initially scheduled.
@@ -23,7 +24,7 @@ void AutoAlignLeft::Initialize() {
   frc::SmartDashboard::PutData("PID Y", &m_yController);
   frc::SmartDashboard::PutData("PID R", &m_rotController);
 
-  std::shared_ptr<nt::NetworkTable> table = table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
+  std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
   double id = table->GetNumber("tid", 0.0);
 
   if((id >= 6 && id <= 11) || (id >= 17 && id <= 22)){
@@ -31,6 +32,8 @@ void AutoAlignLeft::Initialize() {
   }else{
     readyToExit = true;
   }
+
+std::cout << "debug check 1\n";
 
   m_rotController.SetSetpoint(DesiredRot);
   m_rotController.SetTolerance(0.05);
@@ -41,10 +44,10 @@ void AutoAlignLeft::Initialize() {
   m_yController.SetSetpoint(DesiredY);
   m_yController.SetTolerance(0.05);
 
-  frc::SmartDashboard::PutNumber("ID", id);
+  /*frc::SmartDashboard::PutNumber("ID", id);
   frc::SmartDashboard::PutNumber("Desired X", DesiredX);
   frc::SmartDashboard::PutNumber("Desired Y", DesiredY);
-  frc::SmartDashboard::PutNumber("Desired Rot", DesiredRot);
+  frc::SmartDashboard::PutNumber("Desired Rot", DesiredRot);*/
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -53,15 +56,17 @@ void AutoAlignLeft::Execute() {
   double id = table->GetNumber("tid", 0.0);
   std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
 
+std::cout << "debug check 2\n";
+
   if((id >= 6 && id <= 11) || (id >= 17 && id <= 22)){
     if(positions[2] < -1.0){
-      m_xController.SetP(0.2);
-      m_yController.SetP(0.4);
+      m_xController.SetP(0.6);
+      m_yController.SetP(0.8);
       m_rotController.SetP(0.006);
     }else{
-      m_xController.SetP(0.5);
+      m_xController.SetP(0.7);
       m_yController.SetP(1.0);
-      m_rotController.SetP(0.008);
+      m_rotController.SetP(0.009);
     }
     double xSpeed = m_xController.Calculate(positions[2]);
     double ySpeed = -m_yController.Calculate(positions[0]);

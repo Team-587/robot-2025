@@ -31,8 +31,8 @@ class MAXSwerveModule {
         // These are example gains you may need to them for your own robot!
         .Pid(0.04, 0, 0)
         .VelocityFF(drivingVelocityFeedForward)
-        .Pid(0.07, 0, 0, rev::spark::ClosedLoopSlot::kSlot1)
-        .VelocityFF(3 / ModuleConstants::kDriveWheelFreeSpeedRps, rev::spark::ClosedLoopSlot::kSlot1)
+        .Pid(0.08, 0, 0, rev::spark::ClosedLoopSlot::kSlot1)
+        .VelocityFF(1 / ModuleConstants::kDriveWheelFreeSpeedRps, rev::spark::ClosedLoopSlot::kSlot1)
         .OutputRange(-1, 1);
 
     return drivingConfig;

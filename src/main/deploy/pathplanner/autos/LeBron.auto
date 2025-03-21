@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Tag 22"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -39,6 +45,12 @@
           "type": "named",
           "data": {
             "name": "Stow"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Tag 17"
           }
         },
         {
@@ -79,22 +91,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 4"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle Cage Score 2 - Right"
-                }
-              }
-            ]
+            "pathName": " Middle Cage Straight - Right"
           }
         }
       ]

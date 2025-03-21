@@ -77,10 +77,12 @@ m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
   pathplanner::NamedCommands::registerCommand("Stow",
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}));
 
- pathplanner::NamedCommands::registerCommand("Auto Align", std::make_unique<AutoAlign>(true, &m_drive));
+ //pathplanner::NamedCommands::registerCommand("Auto Align", std::make_unique<AutoAlign>(true, &m_drive));
 
  pathplanner::NamedCommands::registerCommand("Tag 20", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(20); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Tag 19", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(19); }, {&m_drive}));
+  pathplanner::NamedCommands::registerCommand("Tag 22", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(22); }, {&m_drive}));
+  pathplanner::NamedCommands::registerCommand("Tag 17", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(17); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Right", frc2::cmd::RunOnce([this] {this->m_drive.setRight(true); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Left", frc2::cmd::RunOnce([this] {this->m_drive.setRight(false); }, {&m_drive}));
 

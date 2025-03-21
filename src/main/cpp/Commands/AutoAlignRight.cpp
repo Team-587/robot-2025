@@ -15,16 +15,17 @@ AutoAlignRight::AutoAlignRight(DriveSubsystem *drivebase)
     m_drivebase(drivebase) {
   // Use addRequirements() here to declare subsystem dependencies.
   this->AddRequirements(m_drivebase);
+  std::cout << "RIGHT\n";
 }
 
 // Called when the command is initially scheduled.
 void AutoAlignRight::Initialize() {
-  frc::SmartDashboard::PutData("PID X", &m_xController);
+  /*frc::SmartDashboard::PutData("PID X", &m_xController);
   frc::SmartDashboard::PutData("PID Y", &m_yController);
-  frc::SmartDashboard::PutData("PID R", &m_rotController);
+  frc::SmartDashboard::PutData("PID R", &m_rotController);*/
 
-  std::shared_ptr<nt::NetworkTable> table = table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
-  double id = table->GetNumber("tid", 0.0);
+  std::shared_ptr<nt::NetworkTable> tableRight = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+  double id = tableRight->GetNumber("tid", 0.0);
 
   if((id >= 6 && id <= 11) || (id >= 17 && id <= 22)){
     readyToExit = false;
@@ -55,11 +56,11 @@ void AutoAlignRight::Execute() {
 
   if((id >= 6 && id <= 11) || (id >= 17 && id <= 22)){
     if(positions[2] < -1.0){
-      m_xController.SetP(0.2);
-      m_yController.SetP(0.4);
+      m_xController.SetP(0.4);
+      m_yController.SetP(0.8);
       m_rotController.SetP(0.006);
     }else{
-      m_xController.SetP(0.5);
+      m_xController.SetP(0.8);
       m_yController.SetP(1.0);
       m_rotController.SetP(0.008);
     }
