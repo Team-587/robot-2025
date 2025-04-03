@@ -20,9 +20,9 @@ AutoAlignLeft::AutoAlignLeft(DriveSubsystem *drivebase)
 
 // Called when the command is initially scheduled.
 void AutoAlignLeft::Initialize() {
-  frc::SmartDashboard::PutData("PID X", &m_xController);
-  frc::SmartDashboard::PutData("PID Y", &m_yController);
-  frc::SmartDashboard::PutData("PID R", &m_rotController);
+  //frc::SmartDashboard::PutData("PID X", &m_xController);
+  //frc::SmartDashboard::PutData("PID Y", &m_yController);
+  //frc::SmartDashboard::PutData("PID R", &m_rotController);
 
   std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
   double id = table->GetNumber("tid", 0.0);
@@ -52,9 +52,10 @@ std::cout << "debug check 1\n";
 
 // Called repeatedly when this Command is scheduled to run
 void AutoAlignLeft::Execute() {
-  std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+  std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
   double id = table->GetNumber("tid", 0.0);
   std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
+  frc::SmartDashboard::PutNumber("Y", positions[2]);
 
 std::cout << "debug check 2\n";
 
@@ -62,7 +63,7 @@ std::cout << "debug check 2\n";
     if(positions[2] < -1.0){
       m_xController.SetP(0.6);
       m_yController.SetP(0.8);
-      m_rotController.SetP(0.006);
+      m_rotController.SetP(0.012);
     }else{
       m_xController.SetP(0.7);
       m_yController.SetP(1.0);

@@ -16,6 +16,7 @@
 #include <frc/DigitalInput.h>
 #include <frc/XboxController.h>
 #include <frc/AnalogInput.h>
+#include "subsystems/Climber.h"
 
 using namespace rev::spark;
 
@@ -49,6 +50,9 @@ class CoralSubsystem : public frc2::SubsystemBase {
   void setSpeed(double speed);
 
   bool haveCoral;
+  bool checkCoral();
+  void climbMode();
+  bool climbActivated;
   bool readyToScore;
 
   double autoSpeed;

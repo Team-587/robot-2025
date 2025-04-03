@@ -6,29 +6,68 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Configs.h"
 
-Climber::Climber() {
-    #ifdef haveClimber
-    m_climberMotor2.Configure(Configs::climberConfig2(), SparkBase::ResetMode::kResetSafeParameters, SparkBase::PersistMode::kPersistParameters);
-    m_climberHopperMotor2.Configure(Configs::climberHopperConfig2(), SparkBase::ResetMode::kResetSafeParameters, SparkBase::PersistMode::kPersistParameters);
-    #endif
-}
+Climber::Climber() {}
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
     double coDriverRSY = m_codriverController.GetRightY();
-    double coDriverLSY = m_codriverController.GetLeftY();
+    double coDriverLT = m_codriverController.GetLeftTriggerAxis();
+    double coDriverRT = m_codriverController.GetRightTriggerAxis();
+    frc::SmartDashboard::PutNumber("CoDriver Right Y", coDriverRSY);
     frc::SmartDashboard::PutBoolean("canClimb", canClimb);
-    #ifdef haveClimber
-    if(canClimb){
-        m_climberMotor.Set(coDriverRSY);
-        m_climberHopperMotor.Set(coDriverLSY);
-    }else{
-        m_climberMotor.Set(0.0);
-        m_climberHopperMotor.Set(0.0);
+    frc::SmartDashboard::PutNumber("velocity", m_climberMotor.GetAbsoluteEncoder().GetVelocity());
+    frc::SmartDashboard::PutBoolean("x Pressed", xIsPressed);
+    //#ifdef haveClimber
+    if(canClimb == true){
+        if(coDriverRT > 0.2) {
+            climberIn();
+        } else if(coDriverLT > 0.2){
+            climberOut();
+        } else {
+            m_climberMotor.StopMotor();
+        }
+        if(xIsPressed == true){
+            m_climberServo.Set(0);
+        }else{
+            m_climberServo.Set(0.65);
+        }
+        //frc::SmartDashboard::PutNumber("SetSpeed", m_climberMotor.Get());
+    }else if(canClimb == false){
+        m_climberMotor.StopMotor();
     }
-    #endif
+    //#endif
 }
 
 void Climber::allowClimb(){
     canClimb = !canClimb;
+}
+
+void Climber::xPressed() {
+    if(canClimb) {
+        xIsPressed = !xIsPressed;
+    } else {
+        xIsPressed = false;
+    }
+    }
+
+void Climber::dropHopper(){
+    if(canClimb){
+        m_hopperServo.Set(0);
+    }
+}
+
+void Climber::climberIn() {
+    if(canClimb) {
+        m_climberMotor.Set(m_codriverController.GetRightTriggerAxis());
+    }
+}
+
+void Climber::climberOut() {
+    if(canClimb) {
+        m_climberMotor.Set(m_codriverController.GetLeftTriggerAxis() * -1.0);
+    }
+}
+
+bool Climber::climbMode(){
+    return canClimb;
 }

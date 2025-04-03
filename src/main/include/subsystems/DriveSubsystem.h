@@ -18,11 +18,14 @@
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/CoralSubsystem.h"
+//#include "Commands/AutoAlignLeft.h"
 //#include <choreo/trajectory/SwerveSample.h>
 //#include <frc/controller/PIDController.h>
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
+#include <photon/PhotonCamera.h>
+
 
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
@@ -44,6 +47,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   void setPreferedAprilTag(int tag);
   void setRight(bool right);
+
+  void coralCheck();
   
   void Periodic() override;
 
@@ -91,6 +96,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ZeroHeading();
 
+
+  void setIntaking(bool intaking);
   /**
    * Returns the turn rate of the robot.
    *
@@ -129,9 +136,16 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void driveRobotRelative(const frc::ChassisSpeeds& robotRelativeSpeeds);
 
   double id;
-  int preferedTag = -1;
-  bool Right;
+  std::shared_ptr<nt::NetworkTable> table;
+  std::vector<double> positions;
+  double DesiredX;
+  double DesiredY;
+  double DesiredRot;
+  int preferedTagRed = -1;
+  int preferedTagBlue = -1;
+  bool Right = true;
 
+  bool intake = false;
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -167,6 +181,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   frc::SwerveDriveOdometry<4> m_odometry;
 
   CoralSubsystem *p_coralSubsystem = NULL;
+
+  photon::PhotonCamera photonCam{"photonvision"};
 
   public: 
   //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;

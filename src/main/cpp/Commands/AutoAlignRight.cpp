@@ -11,7 +11,7 @@
 AutoAlignRight::AutoAlignRight(DriveSubsystem *drivebase)
   : m_xController(0.4,0.0,0), 
     m_yController(0.8,0.0,0), 
-    m_rotController(0.008,0.0,0), 
+    m_rotController(0.01,0.0,0), 
     m_drivebase(drivebase) {
   // Use addRequirements() here to declare subsystem dependencies.
   this->AddRequirements(m_drivebase);
@@ -58,7 +58,7 @@ void AutoAlignRight::Execute() {
     if(positions[2] < -1.0){
       m_xController.SetP(0.4);
       m_yController.SetP(0.8);
-      m_rotController.SetP(0.006);
+      m_rotController.SetP(0.012);
     }else{
       m_xController.SetP(0.8);
       m_yController.SetP(1.0);

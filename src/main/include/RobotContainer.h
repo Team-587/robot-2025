@@ -64,6 +64,10 @@ private:
   
   frc2::InstantCommand m_ZeroHeading{[this] {m_drive.ZeroHeading(); }, {&m_drive}};
   frc2::InstantCommand m_StartClimb{[this] {m_climber.allowClimb();}, {&m_climber}};
+  frc2::InstantCommand m_lightsClimb{[this] {m_lights.climbMode();}, {&m_lights}};
+  frc2::InstantCommand m_coralClimb{[this] {m_coralSubsystem.climbMode();}, {&m_coralSubsystem}};
+  frc2::InstantCommand m_dropHopper{[this] {m_climber.dropHopper();}, {&m_climber}};
+  frc2::InstantCommand m_servoMotor{[this] {m_climber.xPressed();}, {&m_climber}};
 
   
   std::unique_ptr<frc2::Command> Test;

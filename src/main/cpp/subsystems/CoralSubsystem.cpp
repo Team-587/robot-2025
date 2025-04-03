@@ -45,6 +45,12 @@ void CoralSubsystem::Periodic() {
     frc::SmartDashboard::PutNumber("Angle", m_wristEncoder.GetPosition());
     frc::SmartDashboard::PutNumber("Height", m_uppiesEncoder1.GetPosition());
     #endif
+
+    if(climbActivated){
+        m_houseMotor.Set(0.0);
+        m_wristClosedLoopController.SetReference(CoralConstants::kWristL1Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
+        m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesL1Height, rev::spark::SparkLowLevel::ControlType::kPosition);
+    }else{
     
     /*if(desiredState == LEVEL1){
         m_wristClosedLoopController.SetReference(CoralConstants::kWristL1Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
@@ -93,6 +99,7 @@ void CoralSubsystem::Periodic() {
                 m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);    
             }
         }else{
+             m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngleNoCoral, rev::spark::SparkLowLevel::ControlType::kPosition);
              m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
         if(checkUppiesHeight(CoralConstants::kUppiesIntakeHeight)){
@@ -105,9 +112,9 @@ void CoralSubsystem::Periodic() {
     }
 
     if(frc::DriverStation::IsAutonomousEnabled()){
-        std::cout << "Autonomous" << autoSpeed << "\n";
+        //std::cout << "Autonomous" << autoSpeed << "\n";
         if(haveCoral == true && autoSpeed >= 0.0){
-            m_houseMotor.Set(CoralConstants::kBackspin);
+            m_houseMotor.Set(CoralConstants::kBackspin + 0.05);
         }else{
             m_houseMotor.Set(autoSpeed);
         }
@@ -119,25 +126,25 @@ void CoralSubsystem::Periodic() {
         if(haveCoral == true) {
             //houseMovingAngle = true;
             //sleep(10);
-            std::cout << "House Stopped\n";
+            //std::cout << "House Stopped\n";
             //m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
     }
     
     if(desiredState == INTAKE){
         if(haveCoral == true) {
-            std::cout << "STOWCORAL\n";
+            //std::cout << "STOWCORAL\n";
             //houseMovingAngle = true;
             m_houseMotor.Set(CoralConstants::kHouseStopSpeed + 0.05);
             //sleep(10);
-            std::cout << "House Stopped\n";
+            //std::cout << "House Stopped\n";
             m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
         }
 
         else if(haveCoral == false) {
         std::cout << "INTAKE\n";
 
-        if(checkWristAngle(CoralConstants::kWristMoveAngle) == true){
+        if(checkWristAngle(CoralConstants::kWristMoveAngleNoCoral) == true){
             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
         
         }
@@ -200,7 +207,7 @@ void CoralSubsystem::Periodic() {
     //LEVEL4
     if(desiredState == LEVEL4){
         if(frc::DriverStation::IsAutonomousEnabled()){
-            std::cout << "LEVEL 4\n";
+            //std::cout << "LEVEL 4\n";
             // houseMovingAngle = true;
             m_wristClosedLoopController.SetReference(CoralConstants::kWristL4Angle, rev::spark::SparkLowLevel::ControlType::kPosition);
             if(checkWristAngle(CoralConstants::kWristL4Angle)){
@@ -261,6 +268,7 @@ void CoralSubsystem::Periodic() {
             m_houseMotor.Set(CoralConstants::kAlgaeShoot);
         }
     }
+    }
     //double coDriverRSY = m_codriverController.GetRightY();
     //m_uppiesMotor.Set(coDriverRSY);
 
@@ -300,4 +308,14 @@ bool CoralSubsystem::checkUppiesHeight(double uppiesHeight){
     #else
     return true;
     #endif
+}
+
+bool CoralSubsystem::checkCoral(){
+    bool coral = !m_houseSwitch.Get();
+    //std::cout << coral << "\n";
+    return coral;
+}
+
+void CoralSubsystem::climbMode(){
+    climbActivated = !climbActivated;
 }

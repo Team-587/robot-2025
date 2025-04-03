@@ -7,13 +7,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Intake"
+            "name": "Coral Station Start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Auto align"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Level 3"
+            "name": "Coral Station End"
           }
         }
       ]

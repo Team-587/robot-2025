@@ -14,8 +14,6 @@
 
 void Robot::RobotInit() {
   frc::CameraServer::StartAutomaticCapture();
-  frc::PowerDistribution PD{1, frc::PowerDistribution::ModuleType::kRev};
-  PD.SetSwitchableChannel(true);
 }
 
 /**

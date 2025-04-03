@@ -26,6 +26,11 @@
 #include <vector>
 #include "Constants.h"
 #include <frc/controller/PIDController.h>
+#include <iostream>
+#include <chrono>
+#include <thread>
+#include "subsystems/CoralSubsystem.h"
+#include <photon/PhotonUtils.h>
 //#include <choreo/trajectory/Trajectory.h>
 //#include <choreo/Choreo.h>
 
@@ -58,6 +63,7 @@ DriveSubsystem::DriveSubsystem()
                   //auto trajectory = choreo::Choreo::LoadTrajectory<choreo::SwerveSample>("Score");
 
                   //headingController.EnableContinuousInput(-M_PI, M_PI);
+
 
                   frc::SmartDashboard::PutData("Field", &m_field);
 
@@ -98,6 +104,12 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
   frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
   frc::SmartDashboard::PutNumber("Roll", m_NavX.GetRoll());
+  
+  //std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+  //auto keys = 
+  //for(const std::string& key : keys) {
+
+  //}
 
   /*std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
   targetOffsetAngle_Horizontal = table->GetNumber("tx", 0.0);
@@ -108,15 +120,13 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("LL tx", targetOffsetAngle_Horizontal);
   frc::SmartDashboard::PutNumber("LL ty", targetOffsetAngle_Vertical);*/
     
-  /*std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+  //std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+  /*if(positions.size() >= 5){
   frc::SmartDashboard::PutNumber("Limelight Left X", positions[2]);
   frc::SmartDashboard::PutNumber("Limelight Left Y", positions[0]);
-  frc::SmartDashboard::PutNumber("Limelight Left Rot", positions[4]);*/
-
-  std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
-  frc::SmartDashboard::PutNumber("LR X", positions[2]);
-  frc::SmartDashboard::PutNumber("LR Y", positions[0]);
-  frc::SmartDashboard::PutNumber("LR Rot", positions[4]);
+  frc::SmartDashboard::PutNumber("Limelight Left Rot", positions[4]);
+  }*/
+  //std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
   //frc::SmartDashboard::PutNumber("LL ta", targetArea);
   //frc::SmartDashboard::PutNumber("LL ts", targetSkew);
 
@@ -172,22 +182,94 @@ void DriveSubsystem::Periodic() {
 
 void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeSpeeds){
     frc::ChassisSpeeds targetSpeeds = frc::ChassisSpeeds::Discretize(robotRelativeSpeeds, 0.02_s);
+    double distanceCheck = -0.9;
+    double pidD = 0.0003;
     //targetSpeeds.vx = -targetSpeeds.vx;
    // targetSpeeds.vy = -targetSpeeds.vy;
    // targetSpeeds.omega = -targetSpeeds.omega;
+    
+   if(intake) {
+    std::cout << "Going To Intake\n";
+    auto results = photonCam.GetAllUnreadResults();
+    units::degree_t targetYaw = 0.0_deg;
+    units::meter_t targetRange = 0.0_m;
+    if(results.size() > 0) {
+        std::cout << "result\n";
+        auto result = results[results.size() - 1];
+        if(result.HasTargets()) {
+            for(auto& target : result.GetTargets()) {
+                if(target.GetFiducialId() == 12 || target.GetFiducialId() == 13 || target.GetFiducialId() == 1 || target.GetFiducialId() == 2) {
+                    targetYaw = units::degree_t{target.GetYaw()};
+                    targetRange = photon::PhotonUtils::CalculateDistanceToTarget(
+                        0.9398_m,
+                        1.4859_m,
+                        57_deg,
+                        units::degree_t{target.GetPitch()});
+                        std::cout << "m\n";
+                        double xDist = (double)targetRange * std::cos((double)targetYaw * (PI / 180.0));
+                        double yDist = (double)targetRange * std::sin((double)targetYaw * (PI / 180.0));
+                        std::cout << "a\n";
+                        frc::PIDController m_xController(3.0, 0.0, 0.0);
+                        frc::PIDController m_yController(3.0, 0.0, 0.0);
+                        frc::PIDController m_rotController(0.03, 0.0, 0.0);
+
+                        m_rotController.SetSetpoint(0);
+                        m_rotController.SetTolerance(0.05);
+                        m_xController.SetSetpoint(0.22);
+                        m_xController.SetTolerance(0.05);
+                        m_yController.SetSetpoint(0);
+                        m_yController.SetTolerance(0.05);
+
+                        double xSpeed = m_xController.Calculate(xDist);
+                        double ySpeed = -m_yController.Calculate(yDist);
+                        double rotValue = -m_rotController.Calculate((double)targetYaw);
+
+                        targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
+                        targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
+                        //targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue; 
+                        std::cout<<"ligning up " << xSpeed << " "<< ySpeed << " " << rotValue << " " << (double)targetRange << " " << (double)targetYaw << " " << xDist << " " << yDist << "\n";
+                        
+                }
+            }
+        }
+    }
+   } else {
+   if(Right){
+    table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+    id = table->GetNumber("tid", 0.0);
+   }else{
+    table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
+    id = table->GetNumber("tid", 0.0);
+   }
    if(p_coralSubsystem->haveCoral){
-        double DesiredX = -0.47;
-        double DesiredY = 0.19;
-        double DesiredRot = -2.5;
-        std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
-        double id = table->GetNumber("tid", 0.0);
-        std::cout << "Auto Align Executed: ID" << id << "\n";
-        std::vector<double> positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
-        if(id == preferedTag){
-            if(positions[2] > -0.9){
+        if(id == preferedTagRed || id == preferedTagBlue){
+            if(Right){
+                //std::cout << Right << " Right\n";
+                table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
+                id = table->GetNumber("tid", 0.0);
+                //std::cout << "Auto Align Executed: ID" << id << "\n";
+                positions = LimelightHelpers::getBotpose_TargetSpace("limelight-left");
+                DesiredX = -0.45;
+                DesiredY = 0.18;
+                DesiredRot = -2.5;
+                distanceCheck = -0.9;
+                pidD = 0.0003;
+                //distanceCheck = -1.3;
+            }else if(Right == false){
+                table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-right");
+                id = table->GetNumber("tid", 0.0);
+                //std::cout << "Auto Align Executed: ID" << id << "\n";
+                positions = LimelightHelpers::getBotpose_TargetSpace("limelight-right");
+                DesiredX = -0.45;
+                DesiredY = -0.18;
+                DesiredRot = -1.025;
+                distanceCheck = -0.9;
+                pidD = 0.0;
+            }
+            if(positions[2] > distanceCheck){
                 //frc::PIDController m_xController(1.2, 0.0, 0.0);
                 frc::PIDController m_xController(2.0, 0.0, 0.0);
-                frc::PIDController m_yController(2.0, 0.0, 0.0003);
+                frc::PIDController m_yController(2.0, 0.0, pidD);
                 frc::PIDController m_rotController(0.03, 0.0, 0.0);
 
                 m_rotController.SetSetpoint(DesiredRot);
@@ -204,13 +286,15 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                 targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
                 targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
                 targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
-                std::cout << "See April Tag: " << id;
+                //std::cout << "See April Tag: " << id;
             }
+        
         }
+   }
  }
-    if (frc::DriverStation::IsAutonomousEnabled()) {
-        std::cout << "auto drive speed x:" << (double)targetSpeeds.vx << " y:" << (double)targetSpeeds.vy << " ang:" << (double)targetSpeeds.omega << "\n";
-    }
+    // if (frc::DriverStation::IsAutonomousEnabled()) {
+    //     std::cout << "auto drive speed x:" << (double)targetSpeeds.vx << " y:" << (double)targetSpeeds.vy << " ang:" << (double)targetSpeeds.omega << "\n";
+    // }
     
     auto targetStates = kDriveKinematics.ToSwerveModuleStates(targetSpeeds);
     SetModuleStates(targetStates);
@@ -330,22 +414,52 @@ frc::Pose2d DriveSubsystem::GetPose() {
 }
 */
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
-    frc::Pose2d tmpPose = GetPose();
-    std::cout << "Reset Odometry start X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
-    std::cout << "Reset Odometry set   X:" << (double)pose.X() << " Y:" << (double)pose.Y() << " Rot:" << (double)pose.Rotation().Degrees() << "\n";
+    //frc::Pose2d tmpPose = GetPose();
+    //std::cout << "Reset Odometry start X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
+    //std::cout << "Reset Odometry set   X:" << (double)pose.X() << " Y:" << (double)pose.Y() << " Rot:" << (double)pose.Rotation().Degrees() << "\n";
   m_odometry.ResetPosition(
       GetHeading(),
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
       pose);
-    tmpPose = GetPose();
-    std::cout << "Reset Odometry after X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
+    //tmpPose = GetPose();
+    //std::cout << "Reset Odometry after X:" << (double)tmpPose.X() << " Y:" << (double)tmpPose.Y() << " Rot:" << (double)tmpPose.Rotation().Degrees() << "\n";
 } 
 
 void DriveSubsystem::setPreferedAprilTag(int tag){
-    preferedTag = tag;
+    preferedTagBlue = tag;
+    if(tag == 22){
+        preferedTagRed = 9;
+    }else if(tag == 21){
+        preferedTagRed = 10;
+    }else if(tag == 20){
+        preferedTagRed = 11;
+    }else if(tag == 19){
+        preferedTagRed = 6;
+    }else if(tag == 18){
+        preferedTagRed = 7;
+    }else if(tag == 17){
+        preferedTagRed = 8;
+    }
 }
 
 void DriveSubsystem::setRight(bool right){
     Right = right;
+}
+
+void DriveSubsystem::coralCheck() {
+    std::chrono::seconds duration(2);
+
+    auto startTime = std::chrono::steady_clock::now();
+
+    while(std::chrono::steady_clock::now() - startTime < duration) {
+        if(p_coralSubsystem->checkCoral()) {
+            return;
+        }
+    }
+}
+
+void DriveSubsystem::setIntaking(bool intaking) {
+    intake = intaking;
+    std::cout << "setting Intake: " << intake << " \n";
 }

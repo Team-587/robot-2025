@@ -40,8 +40,12 @@ class AutoAlignLeft
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+  /*MECK
+  double DesiredX = -0.4;
+  double DesiredY = -0.18;
+  double DesiredRot = -1.025;*/
 
-  double DesiredX = -0.44;
+  double DesiredX = -0.4;
   double DesiredY = -0.18;
   double DesiredRot = -1.025;
 

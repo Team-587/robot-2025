@@ -29,8 +29,8 @@ class MAXSwerveModule {
     drivingConfig.closedLoop
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kPrimaryEncoder)
         // These are example gains you may need to them for your own robot!
-        .Pid(0.04, 0, 0)
-        .VelocityFF(drivingVelocityFeedForward)
+        .Pid(0.02, 0, 0)
+        .VelocityFF(drivingVelocityFeedForward * 1.5)
         .Pid(0.08, 0, 0, rev::spark::ClosedLoopSlot::kSlot1)
         .VelocityFF(1 / ModuleConstants::kDriveWheelFreeSpeedRps, rev::spark::ClosedLoopSlot::kSlot1)
         .OutputRange(-1, 1);
@@ -123,9 +123,11 @@ static SparkMaxConfig& wristConfig() {
         .SetFeedbackSensor(ClosedLoopConfig::FeedbackSensor::kAlternateOrExternalEncoder)
         // These are example gains you may need to them for your own robot!
         //.Pid(.11, 0, 0)
-        .Pid(.085, 0, 0)
+        //Pid(.085, 0, 0)
+        .Pid(.45, 0, 0)
         //.Pid(0, 0, 0)
-        .OutputRange(-0.55, 1);
+        //.OutputRange(-0.55, 1);
+        .OutputRange(-0.7, 1);
         // Enable PID wrap around for the turning motor. This will allow the
         // PID controller to go through 0 to get to the setpoint i.e. going
         // from 350 degrees to 10 degrees will go through 0 rather than the
@@ -200,31 +202,4 @@ static SparkMaxConfig& wristConfig() {
 
     return ballWristConfig;
   }
-
-static SparkMaxConfig& climberConfig2() {
-    static SparkMaxConfig climberConfig2{};
-
-    // Use module constants to calculate conversion factor
-    //double turningFactor = 2 * std::numbers::pi;
-
-    climberConfig2.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50)
-        .Follow(DriveConstants::kClimberCanId, true);
-
-    return climberConfig2;
 }
-
-static SparkMaxConfig& climberHopperConfig2() {
-    static SparkMaxConfig climberHopperConfig2{};
-
-    // Use module constants to calculate conversion factor
-    //double turningFactor = 2 * std::numbers::pi;
-
-    climberHopperConfig2.SetIdleMode(SparkBaseConfig::IdleMode::kBrake)
-        .SmartCurrentLimit(50)
-        .Follow(DriveConstants::kClimberHopperCanId, true);
-
-    return climberHopperConfig2;
-}
-  
-}  // namespace Configs

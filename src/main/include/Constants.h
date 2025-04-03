@@ -14,7 +14,7 @@
 #include <numbers>
 
 #pragma once
-//#define haveClimber
+#define haveClimber
 #define homeField
 //#define usingNeo
 #define usingAutoAlign
@@ -80,9 +80,6 @@ constexpr int kUppies2CanId = 23;
 constexpr int kHouseWristCanId = 24;
 constexpr int kHouseCanId = 25;
 constexpr int kClimberCanId = 26;
-constexpr int kClimberCanId2 = 27;
-constexpr int kClimberHopperCanId = 28;
-constexpr int kClimberHopperCanId2 = 29;
 
 constexpr int kHouseSwitch = 1;
 constexpr int kUppiesSwitch = 2;
@@ -147,11 +144,11 @@ constexpr double kBallScoreSpeed = -0.3;
 namespace CoralConstants {
 
     //Elevator Constants
-    constexpr double kUppiesIntakeHeight = 0.2;
-    constexpr double kUppiesL1Height = 0.2;
-    constexpr double kUppiesL2Height = 9.5;
+    constexpr double kUppiesIntakeHeight = 0.1;
+    constexpr double kUppiesL1Height = 0.1;
+    constexpr double kUppiesL2Height = 9.8;
     constexpr double kUppiesL3Height = 17.7;
-    constexpr double kUppiesL4Height = 31.5;
+    constexpr double kUppiesL4Height = 31;
     constexpr double kUppiesMaxHeight = 33.0;
     constexpr double kUppiesMinHeight = 0.0;
     constexpr double kAlgaeRemoveHeight1 = 10.0;
@@ -160,7 +157,8 @@ namespace CoralConstants {
 
     //Wrist Constants
     constexpr double kWristIntakeAngle = 85.0;
-    constexpr double kWristMoveAngle = 160.0;
+    constexpr double kWristMoveAngleNoCoral = 160.0;
+    constexpr double kWristMoveAngle = 225.0;
     constexpr double kWristL1Angle = 185.0;
     constexpr double kWristL1AngleAuto = 205.0;
     constexpr double kWristL2Angle = 260.0;
@@ -173,13 +171,14 @@ namespace CoralConstants {
     //House Constants
     constexpr double kHouseIntakeSpeed = 0.30;
     constexpr double kHouseL1Speed = -0.16;
-    constexpr double kHouseL2Speed = -0.3;
-    constexpr double kHouseL3Speed = -0.3;
-    constexpr double kHouseL4Speed = -0.3;
+    constexpr double kHouseL2Speed = -0.15;
+    constexpr double kHouseL3Speed = -0.15;
+    constexpr double kHouseL4Speed = -0.25;
     constexpr double kHouseStopSpeed = 0.0;
     constexpr double kHouseMaxSpeed = 0.0;
     constexpr double kScoreSpeed = -0.3;
-    constexpr double kBackspin = 0.07;
+    //constexpr double kBackspin = 0.07;
+    constexpr double kBackspin = 0.10;
     constexpr double kRemoveSpeed = -0.20;
     constexpr double kAlgaeShoot = 0.30;
 }

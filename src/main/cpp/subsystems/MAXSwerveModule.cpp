@@ -33,9 +33,6 @@ MAXSwerveModule::MAXSwerveModule(const int drivingCANId, const int turningCANId,
   m_desiredState.angle = 
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
   m_drivingEncoder.SetPosition(0);
-
-  frc::SmartDashboard::PutNumber("Drving P", drivingP);
-  frc::SmartDashboard::PutNumber("Drving FF", drivingFF);
 }
 
 frc::SwerveModuleState MAXSwerveModule::GetState() const {
