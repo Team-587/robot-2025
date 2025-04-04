@@ -16,7 +16,10 @@ void Climber::Periodic() {
     frc::SmartDashboard::PutNumber("CoDriver Right Y", coDriverRSY);
     frc::SmartDashboard::PutBoolean("canClimb", canClimb);
     frc::SmartDashboard::PutNumber("velocity", m_climberMotor.GetAbsoluteEncoder().GetVelocity());
-    frc::SmartDashboard::PutBoolean("x Pressed", xIsPressed);
+    frc::SmartDashboard::PutBoolean("Ratchet Engaged", !xIsPressed);
+    if(canClimb == false) {
+        m_climberServo.Set(0.65);
+    }
     //#ifdef haveClimber
     if(canClimb == true){
         if(coDriverRT > 0.2) {
@@ -64,7 +67,7 @@ void Climber::climberIn() {
 
 void Climber::climberOut() {
     if(canClimb) {
-        m_climberMotor.Set(m_codriverController.GetLeftTriggerAxis() * -1.0);
+        m_climberMotor.Set(m_codriverController.GetLeftTriggerAxis() * -0.5);
     }
 }
 

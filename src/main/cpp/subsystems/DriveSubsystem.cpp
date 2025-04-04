@@ -64,6 +64,7 @@ DriveSubsystem::DriveSubsystem()
 
                   //headingController.EnableContinuousInput(-M_PI, M_PI);
 
+                  
 
                   frc::SmartDashboard::PutData("Field", &m_field);
 
@@ -209,13 +210,13 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                         double xDist = (double)targetRange * std::cos((double)targetYaw * (PI / 180.0));
                         double yDist = (double)targetRange * std::sin((double)targetYaw * (PI / 180.0));
                         std::cout << "a\n";
-                        frc::PIDController m_xController(3.0, 0.0, 0.0);
+                        frc::PIDController m_xController(3.7, 0.0, 0.0);
                         frc::PIDController m_yController(3.0, 0.0, 0.0);
                         frc::PIDController m_rotController(0.03, 0.0, 0.0);
 
                         m_rotController.SetSetpoint(0);
                         m_rotController.SetTolerance(0.05);
-                        m_xController.SetSetpoint(0.22);
+                        m_xController.SetSetpoint(0.20);
                         m_xController.SetTolerance(0.05);
                         m_yController.SetSetpoint(0);
                         m_yController.SetTolerance(0.05);
@@ -252,7 +253,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                 DesiredX = -0.45;
                 DesiredY = 0.18;
                 DesiredRot = -2.5;
-                distanceCheck = -0.9;
+                distanceCheck = -1.2;
                 pidD = 0.0003;
                 //distanceCheck = -1.3;
             }else if(Right == false){
@@ -263,7 +264,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                 DesiredX = -0.45;
                 DesiredY = -0.18;
                 DesiredRot = -1.025;
-                distanceCheck = -0.9;
+                distanceCheck = -1.2;
                 pidD = 0.0;
             }
             if(positions[2] > distanceCheck){
@@ -286,7 +287,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                 targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
                 targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
                 targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
-                //std::cout << "See April Tag: " << id;
+                std::cout << "See April Tag: " << id;
             }
         
         }
@@ -298,6 +299,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
     
     auto targetStates = kDriveKinematics.ToSwerveModuleStates(targetSpeeds);
     SetModuleStates(targetStates);
+
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -448,15 +450,16 @@ void DriveSubsystem::setRight(bool right){
 }
 
 void DriveSubsystem::coralCheck() {
-    std::chrono::seconds duration(2);
-
-    auto startTime = std::chrono::steady_clock::now();
-
-    while(std::chrono::steady_clock::now() - startTime < duration) {
-        if(p_coralSubsystem->checkCoral()) {
-            return;
+        frc::ChassisSpeeds stopSpeeds;
+        while(p_coralSubsystem->haveCoral == false) {
+            stopSpeeds.vx = (units::velocity::meters_per_second_t)0.0;
+            stopSpeeds.vy = (units::velocity::meters_per_second_t)0.0;
+            stopSpeeds.omega = (units::angular_velocity::radians_per_second_t)0.0;
+            auto targetStatesStop = kDriveKinematics.ToSwerveModuleStates(stopSpeeds);
+            SetModuleStates(targetStatesStop);
+            
         }
-    }
+        return;
 }
 
 void DriveSubsystem::setIntaking(bool intaking) {

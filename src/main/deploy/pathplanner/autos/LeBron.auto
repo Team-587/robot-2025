@@ -11,13 +11,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Right"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Level 4 Short"
+                  "name": "Level 4"
                 }
               },
               {
@@ -30,15 +36,46 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Middle Cage Piece - RIght"
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station Start"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score Stow"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Middle Cage Piece - RIght"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station End"
           }
         },
         {
@@ -60,7 +97,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Level 4 Long"
+                  "name": "Level 4"
                 }
               },
               {
@@ -73,15 +110,46 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Middle Cage Peice 2 - Right"
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station Start"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score Stow"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Middle Cage Peice 2 - Right"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station End"
           }
         },
         {

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9672443181818182,
-        "y": 6.861917613636364
+        "x": 3.949,
+        "y": 5.207
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4633181818215713,
-        "y": 5.825017045456295
+        "x": 2.2010078023407016,
+        "y": 5.087516254876462
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.6496022727272726,
-        "y": 4.727997159090909
+        "x": 1.0495123537061108,
+        "y": 7.024122236671001
       },
       "prevControl": {
-        "x": 2.3732386363720157,
-        "y": 5.625440340905853
+        "x": 1.5624512353706101,
+        "y": 6.594928478543563
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.34619188921859734,
+      "minWaypointRelativePos": 0.6805143422354077,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.25,
-        "maxAcceleration": 2.5,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -56.65929265352309
+    "rotation": -55.590964707046915
   },
   "reversed": false,
   "folder": "Curry",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.29031545728121
+    "rotation": -59.27101904123233
   },
   "useDefaultConstraints": true
 }

@@ -157,8 +157,8 @@ namespace CoralConstants {
 
     //Wrist Constants
     constexpr double kWristIntakeAngle = 85.0;
-    constexpr double kWristMoveAngleNoCoral = 160.0;
-    constexpr double kWristMoveAngle = 225.0;
+    constexpr double kWristMoveAngleNoCoral = 135.0;
+    constexpr double kWristMoveAngle = 245.0;
     constexpr double kWristL1Angle = 185.0;
     constexpr double kWristL1AngleAuto = 205.0;
     constexpr double kWristL2Angle = 260.0;
