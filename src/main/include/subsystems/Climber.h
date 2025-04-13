@@ -45,6 +45,14 @@ class Climber : public frc2::SubsystemBase {
 
   bool climbMode();
 
+  bool getTriggerPressed();
+
+  void climberDown();
+
+  void ratchetRenegage();
+
+  void bardAlgae();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   //#ifdef haveClimber
@@ -59,4 +67,5 @@ class Climber : public frc2::SubsystemBase {
   bool canClimb = false;
   bool xIsPressed = false;
   
+
 };

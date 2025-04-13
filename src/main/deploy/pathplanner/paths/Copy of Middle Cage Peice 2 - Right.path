@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.129687499999999,
-        "y": 3.87
+        "x": 3.919,
+        "y": 3.053
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.401761363636362,
-        "y": 3.87
+        "x": 1.4061538461538459,
+        "y": 2.6110897435897433
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.72,
-        "y": 3.87
+        "x": 0.6424358974358971,
+        "y": 1.321025641025642
       },
       "prevControl": {
-        "x": 6.298352272727272,
-        "y": 3.87
+        "x": 1.2391462703962692,
+        "y": 2.353799898018649
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.0,
+      "minWaypointRelativePos": 0.5779727095516562,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.25,
-        "maxAcceleration": 1.5,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 5.9,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 54.83356396420719
   },
   "reversed": false,
-  "folder": "Steve Nash",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 52.306594614644084
   },
   "useDefaultConstraints": true
 }

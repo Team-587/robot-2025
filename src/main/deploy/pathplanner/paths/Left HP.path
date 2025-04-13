@@ -3,40 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.129687499999999,
-        "y": 3.87
+        "x": 5.864615384615385,
+        "y": 4.128205128205129
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.401761363636362,
-        "y": 3.87
+        "x": 8.01128205128205,
+        "y": 2.2498717948717943
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.72,
-        "y": 3.87
+        "x": 3.573461538461538,
+        "y": 1.7338461538461536
       },
       "prevControl": {
-        "x": 6.298352272727272,
-        "y": 3.87
+        "x": 4.811923076923076,
+        "y": 1.393269230769231
+      },
+      "nextControl": {
+        "x": 2.193161920780493,
+        "y": 2.1134285487084403
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.8178846153846149,
+        "y": 0.5676282051282044
+      },
+      "prevControl": {
+        "x": 1.550641025641025,
+        "y": 2.0331410256410254
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0743525480367535,
+      "rotationDegrees": 67.06054121408967
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 1.068750000000006,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.25,
-        "maxAcceleration": 1.5,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,10 +77,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 54.21102654081665
   },
   "reversed": false,
-  "folder": "Steve Nash",
+  "folder": "Iman Shumpert - Right",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

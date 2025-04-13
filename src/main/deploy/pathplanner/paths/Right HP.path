@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.129687499999999,
-        "y": 3.87
+        "x": 5.823333333333332,
+        "y": 3.8495512820512823
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.401761363636362,
-        "y": 3.87
+        "x": 7.278525641025641,
+        "y": 6.161346153846154
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.72,
-        "y": 3.87
+        "x": 0.7662820512820508,
+        "y": 7.141794871794872
       },
       "prevControl": {
-        "x": 6.298352272727272,
-        "y": 3.87
+        "x": 1.7776923076923072,
+        "y": 7.740384615384616
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.0,
+      "minWaypointRelativePos": 0.7052083333333322,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.25,
-        "maxAcceleration": 1.5,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,10 +56,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -55.0
   },
   "reversed": false,
-  "folder": "Steve Nash",
+  "folder": "Lance Stephenson- Right",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

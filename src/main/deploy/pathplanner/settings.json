@@ -3,11 +3,16 @@
   "robotLength": 0.861,
   "holonomicMode": true,
   "pathFolders": [
-    "Level1",
     "Curry",
+    "Iman Shumpert - Right",
+    "J.R Smith",
+    "Lance Stephenson - Left",
+    "Lance Stephenson- Right",
     "LeBron",
-    "Steve Nash",
-    "Square"
+    "Level1",
+    "Iman Shumpert - Left",
+    "Square",
+    "Steve Nash"
   ],
   "autoFolders": [
     "Tests",

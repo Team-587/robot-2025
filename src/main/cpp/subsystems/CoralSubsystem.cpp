@@ -99,16 +99,22 @@ void CoralSubsystem::Periodic() {
                 m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);    
             }
         }else{
-             m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngleNoCoral, rev::spark::SparkLowLevel::ControlType::kPosition);
-             m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
+             if(checkUppiesHeight(CoralConstants::kUppiesIntakeHeight)){
+                m_wristClosedLoopController.SetReference(CoralConstants::kWristIntakeAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
+             }else{
+                m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngleNoCoral, rev::spark::SparkLowLevel::ControlType::kPosition);
+                if(checkWristAngle(CoralConstants::kWristMoveAngleNoCoral)){
+                    m_uppies1ClosedLoopController.SetReference(CoralConstants::kUppiesIntakeHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
+                }
+            }
         }
-        if(checkUppiesHeight(CoralConstants::kUppiesIntakeHeight)){
+        /*if(checkUppiesHeight(CoralConstants::kUppiesIntakeHeight)){
             if(haveCoral){
                 m_wristClosedLoopController.SetReference(CoralConstants::kWristMoveAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
             }else{
                 m_wristClosedLoopController.SetReference(CoralConstants::kWristIntakeAngle, rev::spark::SparkLowLevel::ControlType::kPosition);
             }
-        }
+        }*/
     }
 
     if(frc::DriverStation::IsAutonomousEnabled()){
@@ -260,9 +266,11 @@ void CoralSubsystem::Periodic() {
     if(coDriverRT > 0.3){
         if(desiredState == LEVEL1){
             m_houseMotor.Set(CoralConstants::kHouseL1Speed);
-        }else if(desiredState == LEVEL2 || desiredState == LEVEL3 || desiredState == LEVEL4){
+        }else if(desiredState == LEVEL4 || desiredState == STOW){
             m_houseMotor.Set(CoralConstants::kScoreSpeed);
-        }else if(desiredState == STOW || desiredState == INTAKE){
+        }else if(desiredState == LEVEL2 || desiredState == LEVEL3){
+            m_houseMotor.Set(CoralConstants::kHouseL2Speed);
+        }else if(desiredState == INTAKE){
             m_houseMotor.Set(CoralConstants::kBackspin);
         }else if(desiredState == ALGAE1 || desiredState == ALGAE2 || desiredState == ALGAESCORE){
             m_houseMotor.Set(CoralConstants::kAlgaeShoot);
@@ -318,4 +326,20 @@ bool CoralSubsystem::checkCoral(){
 
 void CoralSubsystem::climbMode(){
     climbActivated = !climbActivated;
+}
+
+void CoralSubsystem::processorHeight() {
+    m_uppies1ClosedLoopController.SetReference(CoralConstants::kAlgaeScoreHeight, rev::spark::SparkLowLevel::ControlType::kPosition);
+}
+
+void CoralSubsystem::processorScore() {
+    m_houseMotor.Set(CoralConstants::kAlgaeShoot);
+}
+
+void CoralSubsystem::algaeRemoveHigh() {
+    m_uppies1ClosedLoopController.SetReference(CoralConstants::kAlgaeRemoveHeight2, rev::spark::SparkLowLevel::ControlType::kPosition);
+}
+
+void CoralSubsystem::algaeRemoveLow() {
+    m_uppies1ClosedLoopController.SetReference(CoralConstants::kAlgaeRemoveHeight1, rev::spark::SparkLowLevel::ControlType::kPosition);
 }

@@ -210,14 +210,14 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                         double xDist = (double)targetRange * std::cos((double)targetYaw * (PI / 180.0));
                         double yDist = (double)targetRange * std::sin((double)targetYaw * (PI / 180.0));
                         std::cout << "a\n";
-                        frc::PIDController m_xController(3.7, 0.0, 0.0);
-                        frc::PIDController m_yController(3.0, 0.0, 0.0);
+                        frc::PIDController m_xController(9.0, 0.0, 0.0);
+                        frc::PIDController m_yController(5.0, 0.0, 0.0);
                         frc::PIDController m_rotController(0.03, 0.0, 0.0);
 
                         m_rotController.SetSetpoint(0);
                         m_rotController.SetTolerance(0.05);
-                        m_xController.SetSetpoint(0.20);
-                        m_xController.SetTolerance(0.05);
+                        m_xController.SetSetpoint(0.19);
+                        m_xController.SetTolerance(0.01);
                         m_yController.SetSetpoint(0);
                         m_yController.SetTolerance(0.05);
 
@@ -227,7 +227,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
 
                         targetSpeeds.vx = (units::velocity::meters_per_second_t)xSpeed;
                         targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
-                        //targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue; 
+                        targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue; 
                         std::cout<<"ligning up " << xSpeed << " "<< ySpeed << " " << rotValue << " " << (double)targetRange << " " << (double)targetYaw << " " << xDist << " " << yDist << "\n";
                         
                 }
@@ -449,18 +449,7 @@ void DriveSubsystem::setRight(bool right){
     Right = right;
 }
 
-void DriveSubsystem::coralCheck() {
-        frc::ChassisSpeeds stopSpeeds;
-        while(p_coralSubsystem->haveCoral == false) {
-            stopSpeeds.vx = (units::velocity::meters_per_second_t)0.0;
-            stopSpeeds.vy = (units::velocity::meters_per_second_t)0.0;
-            stopSpeeds.omega = (units::angular_velocity::radians_per_second_t)0.0;
-            auto targetStatesStop = kDriveKinematics.ToSwerveModuleStates(stopSpeeds);
-            SetModuleStates(targetStatesStop);
-            
-        }
-        return;
-}
+void DriveSubsystem::coralCheck() {}
 
 void DriveSubsystem::setIntaking(bool intaking) {
     intake = intaking;

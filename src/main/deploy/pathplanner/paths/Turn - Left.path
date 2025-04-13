@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.129687499999999,
-        "y": 3.87
+        "x": 3.949,
+        "y": 5.207
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.401761363636362,
-        "y": 3.87
+        "x": 3.450170454545455,
+        "y": 5.226576704545454
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.72,
-        "y": 3.87
+        "x": 2.9416193181818193,
+        "y": 5.794957386363636
       },
       "prevControl": {
-        "x": 6.298352272727272,
-        "y": 3.87
+        "x": 3.6595738636363646,
+        "y": 5.605497159090909
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.0,
+      "minWaypointRelativePos": 0.6805143422354077,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.25,
-        "maxAcceleration": 1.5,
+        "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 400.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -1.3019526725788475
   },
   "reversed": false,
-  "folder": "Steve Nash",
+  "folder": "Curry",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -59.27101904123233
   },
   "useDefaultConstraints": true
 }

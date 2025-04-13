@@ -19,25 +19,29 @@ void Climber::Periodic() {
     frc::SmartDashboard::PutBoolean("Ratchet Engaged", !xIsPressed);
     if(canClimb == false) {
         m_climberServo.Set(0.65);
+
+        m_climberMotor.StopMotor();
     }
     //#ifdef haveClimber
     if(canClimb == true){
-        if(coDriverRT > 0.2) {
-            climberIn();
-        } else if(coDriverLT > 0.2){
-            climberOut();
-        } else {
-            m_climberMotor.StopMotor();
+        if(getTriggerPressed() == true) {
+            climberDown();
         }
-        if(xIsPressed == true){
-            m_climberServo.Set(0);
-        }else{
+        if(coDriverRT > 0.2) {
             m_climberServo.Set(0.65);
+            climberIn();
+        } 
+        if(coDriverLT < 0.2) {
+            m_climberServo.Set(0.65);
+        }
+        if(coDriverRT < 0.2 && coDriverLT < 0.2) {
+            m_climberMotor.Set(0.0);
         }
         //frc::SmartDashboard::PutNumber("SetSpeed", m_climberMotor.Get());
     }else if(canClimb == false){
         m_climberMotor.StopMotor();
     }
+    
     //#endif
 }
 
@@ -67,10 +71,30 @@ void Climber::climberIn() {
 
 void Climber::climberOut() {
     if(canClimb) {
-        m_climberMotor.Set(m_codriverController.GetLeftTriggerAxis() * -0.5);
+        m_climberMotor.Set(m_codriverController.GetLeftTriggerAxis() * -0.65);
     }
 }
 
 bool Climber::climbMode(){
     return canClimb;
+}
+
+bool Climber::getTriggerPressed(){
+    if(m_codriverController.GetLeftTriggerAxis() >= 0.2) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void Climber::climberDown(){
+    m_climberServo.Set(0);
+    sleep(0.5);
+    climberOut();
+}
+
+void Climber::ratchetRenegage(){
+    m_climberMotor.Set(0);
+    m_climberServo.Set(0);
 }

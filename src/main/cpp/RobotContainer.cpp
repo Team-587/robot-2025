@@ -72,26 +72,19 @@ m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
 
   pathplanner::NamedCommands::registerCommand("Level 4 Short", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin + 0.05); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.3_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL4Speed); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(0.5_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem})));
+                                                        
 
   pathplanner::NamedCommands::registerCommand("Level 4 Long", frc2::cmd::Sequence( 
                                                          frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin + 0.05); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(2.7_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseL4Speed); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::Wait(0.5_s),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}),
-                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
+                                                         frc2::cmd::Wait(2.25_s),
+                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::LEVEL4); }, {&m_coralSubsystem})));
+                                                        
 
   pathplanner::NamedCommands::registerCommand("Intake", frc2::cmd::Sequence(
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem}), 
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kHouseIntakeSpeed); }, {&m_coralSubsystem}),
-                                                        frc2::cmd::Wait(0.1_s),
+                                                        frc2::cmd::Wait(0.5_s),
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setSpeed(CoralConstants::kBackspin); }, {&m_coralSubsystem})));
 
   /*pathplanner::NamedCommands::registerCommand("Intake", frc2::cmd::Sequence(
@@ -109,13 +102,20 @@ m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
   pathplanner::NamedCommands::registerCommand("Score Stow", frc2::cmd::Sequence(
                                                         frc2::cmd::Wait(0.35_s),
                                                         frc2::cmd::RunOnce([this] {this->m_coralSubsystem.setState(CoralSubsystem::STOW); }, {&m_coralSubsystem})));
-
+  pathplanner::NamedCommands::registerCommand("Remove Top Algae", frc2::cmd::Sequence(
+                                                        frc2::cmd::RunOnce([this] {this->m_coralSubsystem.algaeRemoveHigh(); }, {&m_coralSubsystem})));
+  pathplanner::NamedCommands::registerCommand("Remove Bottom Algae", frc2::cmd::Sequence(
+                                                        frc2::cmd::RunOnce([this] {this->m_coralSubsystem.algaeRemoveLow();}, {&m_coralSubsystem})
+  ));
+  pathplanner::NamedCommands::registerCommand("Processor Height", frc2::cmd::RunOnce([this] {this->m_coralSubsystem.processorHeight();},{&m_coralSubsystem}));
+  pathplanner::NamedCommands::registerCommand("Processor Score", frc2::cmd::RunOnce([this] {this->m_coralSubsystem.processorScore(); }, {&m_coralSubsystem}));
  //pathplanner::NamedCommands::registerCommand("Auto Align", std::make_unique<AutoAlign>(true, &m_drive));
 
- pathplanner::NamedCommands::registerCommand("Tag 20", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(20); }, {&m_drive}));
+  pathplanner::NamedCommands::registerCommand("Tag 20", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(20); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Tag 19", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(19); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Tag 22", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(22); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Tag 17", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(17); }, {&m_drive}));
+  pathplanner::NamedCommands::registerCommand("Tag 21", frc2::cmd::RunOnce([this] {this->m_drive.setPreferedAprilTag(21); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Right", frc2::cmd::RunOnce([this] {this->m_drive.setRight(true); }, {&m_drive}));
   pathplanner::NamedCommands::registerCommand("Left", frc2::cmd::RunOnce([this] {this->m_drive.setRight(false); }, {&m_drive}));
 
@@ -143,29 +143,41 @@ m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
 const std::string Test_Str = "Test";
 const std::string Curry_Str = "Curry2";
 const std::string LeBron_Str = "LeBron2";
-const std::string Level1_Str = "Level1";
+//const std::string Level1_Str = "Level1";
 const std::string SteveNash_Str = "Steve Nash";
-const std::string AutoAlign_Str = "Auto Align";
+//const std::string AutoAlign_Str = "Auto Align";
+//const std::string Iman_Shumpert_Left_Str = "Iman Shumpert- Left";
+const std::string Iman_Shumpert_Str = "Iman Shumpert";
+//const std::string Lance_Stephenson_Left_Str = "Lance Stephenson- Left";
+const std::string Lance_Stephenson_Str = "Lance Stephenson";
 
 Test = PathPlannerAuto(Test_Str).ToPtr().Unwrap();
 Curry = PathPlannerAuto(Curry_Str).ToPtr().Unwrap();
 LeBron = PathPlannerAuto(LeBron_Str).ToPtr().Unwrap();
-Level1 = PathPlannerAuto(Level1_Str).ToPtr().Unwrap();
+//Level1 = PathPlannerAuto(Level1_Str).ToPtr().Unwrap();
 SteveNash = PathPlannerAuto(SteveNash_Str).ToPtr().Unwrap();
 //Autoalign = PathPlannerAuto(AutoAlign_Str).ToPtr().Unwrap();
+//Iman_Shumpert_Left = PathPlannerAuto(Iman_Shumpert_Left_Str).ToPtr().Unwrap();
+Iman_Shumpert = PathPlannerAuto(Iman_Shumpert_Str).ToPtr().Unwrap();
+//Lance_Stephenson_Left = PathPlannerAuto(Lance_Stephenson_Left_Str).ToPtr().Unwrap();
+Lance_Stephenson = PathPlannerAuto(Lance_Stephenson_Str).ToPtr().Unwrap();
 
 /*static auto segGroup = std::make_shared<frc2::SequentialCommandGroup>(
     m_autoAlignRight,
     PathPlannerAuto(AutoAlign_Str)
 );*/
 
-m_chooser.SetDefaultOption(Test_Str, Test.get());
+//m_chooser.SetDefaultOption(Test_Str, Test.get());
 m_chooser.AddOption(Curry_Str, Curry.get());
 m_chooser.AddOption(LeBron_Str, LeBron.get());
-m_chooser.AddOption(Level1_Str, Level1.get());
+//m_chooser.AddOption(Level1_Str, Level1.get());
 m_chooser.AddOption(SteveNash_Str, SteveNash.get());
 //m_chooser.AddOption(AutoAlign_Str, Autoalign.get());
 //m_chooser.AddOption("ABC", segGroup.get());
+//m_chooser.AddOption(Iman_Shumpert_Left_Str, Iman_Shumpert_Left.get());
+m_chooser.AddOption(Iman_Shumpert_Str, Iman_Shumpert.get());
+//m_chooser.AddOption(Lance_Stephenson_Left_Str, Lance_Stephenson_Left.get());
+m_chooser.AddOption(Lance_Stephenson_Str, Lance_Stephenson.get());
 
 frc::SmartDashboard::PutData("Auto", &m_chooser);
 std::cout << "Autos Complete\n";

@@ -50,9 +50,21 @@ class CoralSubsystem : public frc2::SubsystemBase {
   void setSpeed(double speed);
 
   bool haveCoral;
+
   bool checkCoral();
+
   void climbMode();
+
+  void processorHeight();
+
+  void processorScore();
+
+  void algaeRemoveHigh();
+
+  void algaeRemoveLow();
+
   bool climbActivated;
+
   bool readyToScore;
 
   double autoSpeed;

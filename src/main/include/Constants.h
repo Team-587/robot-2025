@@ -170,9 +170,9 @@ namespace CoralConstants {
 
     //House Constants
     constexpr double kHouseIntakeSpeed = 0.30;
-    constexpr double kHouseL1Speed = -0.16;
-    constexpr double kHouseL2Speed = -0.15;
-    constexpr double kHouseL3Speed = -0.15;
+    constexpr double kHouseL1Speed = -0.12;
+    constexpr double kHouseL2Speed = -0.125;
+    constexpr double kHouseL3Speed = -0.125;
     constexpr double kHouseL4Speed = -0.25;
     constexpr double kHouseStopSpeed = 0.0;
     constexpr double kHouseMaxSpeed = 0.0;

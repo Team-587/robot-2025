@@ -11,13 +11,25 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Tag 21"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Level 4"
+                  "name": "Level 4 Short"
                 }
               },
               {
@@ -32,37 +44,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SteveNash Note 2"
+            "waitTime": 0.25
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stow"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TurnFront"
+            "name": "Shoot"
           }
         }
       ]

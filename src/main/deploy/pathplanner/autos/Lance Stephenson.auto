@@ -5,157 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "Tag 22"
+            "waitTime": 0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Right"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 4"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle Cage Start - Right"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Station Start"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score Stow"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle Cage Piece - RIght"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Station End"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stow"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Tag 17"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 4"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle Cage Transition - Right"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Station Start"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score Stow"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle Cage Peice 2 - Right"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Station End"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stow"
+            "name": "Tag 21"
           }
         },
         {
@@ -165,19 +23,111 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Stow"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Level 4"
+                  "name": "Level 4 Short"
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Middle Cage Score 2 - Right"
+                  "pathName": "Center Right"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station Start"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score Stow"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right HP"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stow"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Tag 21"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station End"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 4 Long"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "HP BLR - Right"
                 }
               }
             ]
@@ -192,19 +142,44 @@
         {
           "type": "named",
           "data": {
-            "name": "Score Stow"
+            "name": "Coral Station Start"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Turn - Right"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score Stow"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BLR HP - Right"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stow"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Station End"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Tested",
+  "folder": "Untested",
   "choreoAuto": false
 }

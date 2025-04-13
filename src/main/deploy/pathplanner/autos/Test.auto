@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Coral Auto align"
+            "pathName": "Copy of Middle Cage Peice 2 - Right"
           }
         },
         {
@@ -32,6 +32,12 @@
           "type": "named",
           "data": {
             "name": "Coral Station End"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Cage Transition - Right"
           }
         }
       ]

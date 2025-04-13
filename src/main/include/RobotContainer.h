@@ -68,6 +68,10 @@ private:
   frc2::InstantCommand m_coralClimb{[this] {m_coralSubsystem.climbMode();}, {&m_coralSubsystem}};
   frc2::InstantCommand m_dropHopper{[this] {m_climber.dropHopper();}, {&m_climber}};
   frc2::InstantCommand m_servoMotor{[this] {m_climber.xPressed();}, {&m_climber}};
+  frc2::InstantCommand m_algaeHigh{[this] {m_coralSubsystem.algaeRemoveHigh(); }, {&m_coralSubsystem}};
+  frc2::InstantCommand m_algaeLow{[this] {m_coralSubsystem.algaeRemoveLow(); }, {&m_coralSubsystem}};
+  frc2::InstantCommand m_processorScore{[this] {m_coralSubsystem.processorScore(); }, {&m_coralSubsystem}};
+  frc2::InstantCommand m_processorHeight{[this] {m_coralSubsystem.processorHeight(); }, {&m_coralSubsystem}};
 
   
   std::unique_ptr<frc2::Command> Test;
@@ -75,6 +79,11 @@ private:
   std::unique_ptr<frc2::Command> Curry;
   std::unique_ptr<frc2::Command> Level1;
   std::unique_ptr<frc2::Command> SteveNash;
+
+  //std::unique_ptr<frc2::Command> Iman_Shumpert_Left;
+  std::unique_ptr<frc2::Command> Iman_Shumpert;
+  //std::unique_ptr<frc2::Command> Lance_Stephenson_Left;
+  std::unique_ptr<frc2::Command> Lance_Stephenson;
   //std::unique_ptr<frc2::Command> Autoalign;
 
 
