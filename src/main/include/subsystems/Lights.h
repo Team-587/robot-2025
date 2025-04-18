@@ -9,6 +9,7 @@
 
 #include "Constants.h"
 #include "subsystems/CoralSubsystem.h"
+#include "subsystems/DriveSubsystem.h"
 #include "LimelightHelpers.h"
 #include "subsystems/DriveSubsystem.h"
 #include "networktables/NetworkTable.h"
@@ -21,6 +22,7 @@ class Lights : public frc2::SubsystemBase {
   Lights();
 
   void setCoralSubsystem(CoralSubsystem *tmpcs){p_coralSubsystem = tmpcs;}; 
+  void setDriveSubsystem(DriveSubsystem *tmpcs){p_driveSubsystem = tmpcs;}; 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -43,4 +45,5 @@ class Lights : public frc2::SubsystemBase {
   std::array<frc::AddressableLED::LEDData, DriveConstants::kLEDtotalLength > LEDArray;
 
   CoralSubsystem *p_coralSubsystem = NULL;
+  DriveSubsystem *p_driveSubsystem = NULL;
 };

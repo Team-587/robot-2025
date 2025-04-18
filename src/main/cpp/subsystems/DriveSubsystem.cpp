@@ -105,6 +105,8 @@ void DriveSubsystem::Periodic() {
   frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
   frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
   frc::SmartDashboard::PutNumber("Roll", m_NavX.GetRoll());
+
+  frc::SmartDashboard::PutNumber("Pigeon Yaw", pigeon.GetYaw().GetValueAsDouble());
   
   //std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
   //auto keys = 
@@ -200,6 +202,7 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
         if(result.HasTargets()) {
             for(auto& target : result.GetTargets()) {
                 if(target.GetFiducialId() == 12 || target.GetFiducialId() == 13 || target.GetFiducialId() == 1 || target.GetFiducialId() == 2) {
+                    autoAlignHPLight = true;
                     targetYaw = units::degree_t{target.GetYaw()};
                     targetRange = photon::PhotonUtils::CalculateDistanceToTarget(
                         0.9398_m,
@@ -230,6 +233,9 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                         targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue; 
                         std::cout<<"ligning up " << xSpeed << " "<< ySpeed << " " << rotValue << " " << (double)targetRange << " " << (double)targetYaw << " " << xDist << " " << yDist << "\n";
                         
+                }
+                else{
+                    autoAlignHPLight = false;
                 }
             }
         }
@@ -269,6 +275,9 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
             }
             if(positions[2] > distanceCheck){
                 //frc::PIDController m_xController(1.2, 0.0, 0.0);
+
+                autoAlignReefLight = true;
+
                 frc::PIDController m_xController(2.0, 0.0, 0.0);
                 frc::PIDController m_yController(2.0, 0.0, pidD);
                 frc::PIDController m_rotController(0.03, 0.0, 0.0);
@@ -288,6 +297,8 @@ void DriveSubsystem::driveRobotRelative(const frc::ChassisSpeeds& robotRelativeS
                 targetSpeeds.vy = (units::velocity::meters_per_second_t)ySpeed;
                 targetSpeeds.omega = (units::angular_velocity::radians_per_second_t)rotValue;
                 std::cout << "See April Tag: " << id;
+            }else{
+                autoAlignReefLight = false;
             }
         
         }

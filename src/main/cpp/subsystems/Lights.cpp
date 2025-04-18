@@ -5,6 +5,7 @@
 #include "subsystems/Lights.h"
 #include "subsystems/CoralSubsystem.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 
 Lights::Lights() {
     for (int j = 0; j < DriveConstants::kLEDtotalLength - 1; j = j + 2) {
@@ -27,6 +28,26 @@ void Lights::Periodic() {
     double idRight = tableRight->GetNumber("tid", 0.0);
 
     frc::SmartDashboard::PutBoolean("lights climb", climbModeActivated);
+    if(frc::DriverStation::IsAutonomousEnabled() == true){
+        if(p_driveSubsystem->autoAlignHPLight && p_coralSubsystem->haveCoral == false && p_driveSubsystem->autoAlignReefLight == false){
+            for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
+                LEDArray[i].SetRGB(0, 0, 139);
+            }
+        }else if(p_driveSubsystem->autoAlignHPLight == false && p_driveSubsystem->autoAlignReefLight){
+            for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
+                LEDArray[i].SetRGB(0, 255, 0);
+            }
+        }else if(p_coralSubsystem->haveCoral && p_driveSubsystem->autoAlignReefLight == false){
+            for(int i = 0; i < DriveConstants::kLEDtotalLength; i++){
+                LEDArray[i].SetRGB(201, 5, 255);
+            }
+        }else{
+            for (int j = 0; j < DriveConstants::kLEDtotalLength - 1; j = j + 2) {
+                LEDArray[j].SetRGB(0, 133, 202);
+                LEDArray[j + 1].SetRGB(252, 186, 3);
+            }
+        }
+    }else{
     
     if(leftAutoAlign){
         if(idLeft == 18 || idLeft == 20 || idLeft == 22 || idLeft == 9 || idLeft == 11 || idLeft == 7){
@@ -78,6 +99,7 @@ void Lights::Periodic() {
             LEDArray[j].SetRGB(0, 133, 202);
             LEDArray[j + 1].SetRGB(252, 186, 3);
         }
+    }
     }
     m_led.SetData(LEDArray);
     m_led.Start();

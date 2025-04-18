@@ -21,6 +21,8 @@
 //#include "Commands/AutoAlignLeft.h"
 //#include <choreo/trajectory/SwerveSample.h>
 //#include <frc/controller/PIDController.h>
+#include <ctre/phoenix6/Pigeon2.hpp>
+
 
 #include "Constants.h"
 #include "MAXSwerveModule.h"
@@ -146,6 +148,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
   bool Right = true;
 
   bool intake = false;
+
+  bool autoAlignReefLight;
+  bool autoAlignHPLight;
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -171,8 +176,9 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   // The gyro sensor
   //frc::ADIS16470_IMU m_gyro;
-  studica::AHRS m_NavX{studica::AHRS::NavXComType::kMXP_SPI};
-  //studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
+  //studica::AHRS m_NavX{studica::AHRS::NavXComType::kMXP_UART};
+  studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
+  ctre::phoenix6::hardware::Pigeon2 pigeon{1, "rio"};
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
 
@@ -183,7 +189,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   CoralSubsystem *p_coralSubsystem = NULL;
 
   photon::PhotonCamera photonCam{"photonvision"};
-
+  
   public: 
   //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
 };

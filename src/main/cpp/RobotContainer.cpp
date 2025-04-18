@@ -32,6 +32,7 @@ RobotContainer::RobotContainer() : m_coralSubsystem(), m_lights(), m_drive(),
 m_autoAlignRight(&m_drive), m_autoAlignLeft(&m_drive){
   // Initialize all of your commands and subsystems here
   m_lights.setCoralSubsystem(&m_coralSubsystem);
+  m_lights.setDriveSubsystem(&m_drive);
   m_drive.setCoralDriveSubsystem(&m_coralSubsystem);
   // Configure the button bindings
   ConfigureButtonBindings();
