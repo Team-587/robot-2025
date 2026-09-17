@@ -177,8 +177,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // The gyro sensor
   //frc::ADIS16470_IMU m_gyro;
   //studica::AHRS m_NavX{studica::AHRS::NavXComType::kMXP_UART};
-  studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
-  ctre::phoenix6::hardware::Pigeon2 pigeon{1, "rio"};
+  //studica::AHRS m_NavX{studica::AHRS::NavXComType::kUSB1};
+  ctre::phoenix6::hardware::Pigeon2 pigeon{5, "rio"};
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
 

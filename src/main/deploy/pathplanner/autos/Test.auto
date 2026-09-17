@@ -5,39 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Coral Station Start"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Copy of Middle Cage Peice 2 - Right"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Check Coral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Station End"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Middle Cage Transition - Right"
+            "pathName": "New Path"
           }
         }
       ]

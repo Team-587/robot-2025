@@ -48,7 +48,8 @@ DriveSubsystem::DriveSubsystem()
                   kRearRightChassisAngularOffset},
       m_odometry{kDriveKinematics,
                  frc::Rotation2d(units::radian_t{
-                     m_NavX.GetRotation2d().Radians()}),
+                     //m_NavX.GetRotation2d().Radians()}),
+                     -pigeon.GetRotation2d().Radians()}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}}/*,
@@ -102,12 +103,16 @@ void DriveSubsystem::Periodic() {
   //m_field.SetRobotPose(m_odometry.GetPose());
   
   //Telemetry
-  frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
-  frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
-  frc::SmartDashboard::PutNumber("Roll", m_NavX.GetRoll());
+  //frc::SmartDashboard::PutNumber("Yaw", m_NavX.GetYaw());
+  //frc::SmartDashboard::PutNumber("Pitch", m_NavX.GetPitch());
+  //frc::SmartDashboard::PutNumber("Roll", m_NavX.GetRoll());
 
   frc::SmartDashboard::PutNumber("Pigeon Yaw", pigeon.GetYaw().GetValueAsDouble());
-  
+  frc::SmartDashboard::PutNumber("Pigeon Rate", pigeon.GetRate());
+  frc::SmartDashboard::PutNumber("Pigeon Rot2d", (double)pigeon.GetRotation2d().Radians());
+  //frc::SmartDashboard::PutNumber("NavX Rot2d", (double)m_NavX.GetRotation2d().Radians());
+  //frc::SmartDashboard::PutNumber("Rot2d dif", (double)m_NavX.GetRotation2d().Radians() - (double)pigeon.GetRotation2d().Radians());
+
   //std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight-left");
   //auto keys = 
   //for(const std::string& key : keys) {
@@ -144,8 +149,13 @@ void DriveSubsystem::Periodic() {
   double distanceCenterAprilTag = distanceAprilTag * (tan((targetOffsetAngle_Horizontal) * std::numbers::pi / 180));
   frc::SmartDashboard::PutNumber("Distance From Center", distanceCenterAprilTag);*/
 
-  m_odometry.Update(frc::Rotation2d(units::radian_t{
+  /*m_odometry.Update(frc::Rotation2d(units::radian_t{
                         m_NavX.GetRotation2d().Radians()}),
+                    {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
+                     m_frontRight.GetPosition(), m_rearRight.GetPosition()});*/
+
+  m_odometry.Update(frc::Rotation2d(units::radian_t{
+                        (double)pigeon.GetRotation2d().Radians()}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
@@ -355,7 +365,8 @@ double rightTriggerValue = (m_driverController.GetRightTriggerAxis() * -.8) + 1.
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
                     //m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
-                    m_NavX.GetRotation2d().Radians()}))
+                    pigeon.GetRotation2d().Radians()}))
+                    //m_NavX.GetRotation2d().Radians()}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -399,15 +410,16 @@ void DriveSubsystem::ResetEncoders() {
 units::degree_t DriveSubsystem::GetHeading() {
   //return frc::Rotation2d(
              //units::radian_t{m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}).Degrees();
-  return frc::Rotation2d(units::radian_t{m_NavX.GetRotation2d().Radians()}).Degrees();
+  return frc::Rotation2d(units::radian_t{/*m_NavX.GetRotation2d().Radians()*/-pigeon.GetRotation2d().Radians()}).Degrees();
 }
 
-void DriveSubsystem::ZeroHeading() { m_NavX.Reset(); ResetEncoders(); }
+void DriveSubsystem::ZeroHeading() { /*m_NavX.Reset();*/ pigeon.Reset(); ResetEncoders(); }
 
 double DriveSubsystem::GetTurnRate() {
   //return -m_gyro.GetRate(frc::ADIS16470_IMU::IMUAxis::kZ).value();
   //GetRate might not be the right method to call
-  return -m_NavX.GetRate();
+  //return -m_NavX.GetRate();
+  return pigeon.GetRate();
 }
 
 frc::Pose2d DriveSubsystem::GetPose() { 

@@ -12,7 +12,7 @@ AutoAlign::AutoAlign(bool isRightScore, DriveSubsystem *drivebase)
   : m_xController(0.4,0.0,0), 
     m_yController(0.8,0.0,0), 
     m_rotController(0.008,0.0,0), 
-    m_isRightScore(isRightScore), 
+    m_isRightScore(isRightScore),
     m_drivebase(drivebase) {
   // Use addRequirements() here to declare subsystem dependencies.
   this->AddRequirements(m_drivebase);
